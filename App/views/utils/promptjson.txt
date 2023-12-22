@@ -1,0 +1,19 @@
+dame dominios sql (y las tablas de cada dominio) en formato json sin code fencing.
+aqui van un ejemplo de formato:
+{
+    "dominios": [
+        {
+            "nombre": "Finanzas",
+            "tablas": [
+                "Inversores",
+                "Exits"
+            ]
+        },
+        {
+            "nombre": "Localizacion",
+            "tablas": [
+                "Ciudades"
+            ]
+        }
+    ]
+}

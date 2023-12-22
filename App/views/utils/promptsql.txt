@@ -1,0 +1,5 @@
+Ahora dame el código sql, sin ningun otro comentario para poder imprimirlo. Imprimelo con code fencing para sql
+Esto lo haras usando la capa golden como base de datos, los dominios como esquemas y las tablas como tablas, te dejo un ejemplo de como deberia ser la query SQL:
+CREATE DATABASE IF NOT EXISTS <database>;
+CREATE SCHEMA IF NOT EXISTS <database>.<domain_name>;
+CREATE TABLE IF NOT EXISTS <database>.<domain_name>.<table_name> AS SELECT * FROM <table_name>;
