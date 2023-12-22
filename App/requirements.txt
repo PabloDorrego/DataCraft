@@ -7,4 +7,3 @@ snowflake-snowpark-python
 utils
 typing
 streamlit
-ast
