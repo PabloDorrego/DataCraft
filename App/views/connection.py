@@ -172,6 +172,6 @@ def load_view():
         input3 = st.text_input("Base de datos:", "DEMO")
 
         st.header("Información de la empresa")
-        area = get_area()
-        des = get_des()    
+        des = get_des() 
+        area = get_area()   
         send = st.button("Generar", disabled=(area is ""), on_click=callback)

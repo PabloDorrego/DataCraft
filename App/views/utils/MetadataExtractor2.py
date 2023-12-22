@@ -68,6 +68,7 @@ def execute_query_and_fetch_dataframe(session, db):
     ON
         COLUMNS.TABLE_NAME = TABLES.TABLE_NAME
         AND TABLES.TABLE_SCHEMA != 'INFORMATION_SCHEMA'
+        AND TABLES.TABLE_SCHEMA != 'DATA_MARTS'
     ORDER BY
         TABLES.TABLE_NAME, COLUMNS.COLUMN_NAME;
     """
