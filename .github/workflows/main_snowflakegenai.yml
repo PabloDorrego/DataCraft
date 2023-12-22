@@ -33,34 +33,28 @@ jobs:
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip the App folder for deployment
-        run: zip -r release.zip App/
-        # Asumiendo que "App" es el directorio raíz de tu aplicación Python
-        # y que todo el código necesario para ejecutar tu aplicación está dentro de ese directorio.
+        run: zip -r python-app.zip App/
+        # Asegúrate de que el directorio 'App/' contiene todo tu código y archivos necesarios.
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v3
         with:
-          name: python-app
-          path: release.zip
+          name: python-app-zip  # El nombre del artefacto que se va a cargar. 
+          path: python-app.zip  # La ruta del archivo que se va a cargar.
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: python-app
+          name: python-app-zip  # Asegúrate de que esto coincida con el nombre del artefacto que subiste
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'snowflakegenai'
-          # slot-name no es necesario a menos de que realmente estés utilizando deployment slots
-          # slot-name: 'Production' 
-          package: python-app # Asume que la acción utiliza el artefacto descargado.
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7C2AA6C3E4314B59BBA33BF8B837D8BD }}
+          package: python-app.zip  # La ruta local al archivo ZIP descargado.
