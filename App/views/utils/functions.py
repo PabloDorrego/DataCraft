@@ -1,13 +1,8 @@
-from ast import If
+
 import streamlit as st
-from streamlit_chat import message
-import streamlit.components.v1 as components  # Import Streamlit
-import requests
 import json
 import openai
 from typing import List
-from streamlit_modal import Modal
-
 def get_text():
 
     input_text = st.text_input("You: ","", key="input")
