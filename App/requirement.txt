@@ -1,0 +1,12 @@
+streamlit_chat
+openai
+AzureOpenAI
+snowflake
+snowflake-connector-python
+snowflake-snowpark-python
+utils
+base64
+streamlit.components.v1
+json
+typing
+ast
