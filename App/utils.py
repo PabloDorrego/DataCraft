@@ -6,7 +6,7 @@ from PATHS import NAVBAR_PATHS, SETTINGS
 
 
 def inject_custom_css():
-    with open('assets/styles.css') as f:
+    with open('/home/site/wwwroot/App/assets/styles.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 
@@ -18,7 +18,7 @@ def get_current_route():
 
 
 def navbar_component():
-    with open("assets/images/settings.png", "rb") as image_file:
+    with open("/home/site/wwwroot/App/assets/images/settings.png", "rb") as image_file:
         image_as_base64 = base64.b64encode(image_file.read())
 
     navbar_items = ''

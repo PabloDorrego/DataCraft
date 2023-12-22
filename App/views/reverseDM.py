@@ -124,7 +124,7 @@ def load_view():
     )
 
     # Barra lateral con configuraciones de Azure OpenAI y Snowflake
-    st.sidebar.image("views/utils/cuadrado-inetum.png")
+    st.sidebar.image("/home/site/wwwroot/App/views/utils/cuadrado-inetum.png")
     st.sidebar.header("Configuracion Azure OpenAI")
 
     # Entradas para configuración de Azure OpenAI

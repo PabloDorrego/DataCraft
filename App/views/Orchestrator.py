@@ -3,7 +3,6 @@
 
 # Importar las bibliotecas necesarias.from snowflake.snowpark import Session
 import os
-from datetime import datetime
 from snowflake.snowpark import Session
 import streamlit as st
 #Función para iniciar sesión en Snowflake mediante autenticación básica.
@@ -279,7 +278,7 @@ ALTER TABLE GOLDEN_ZONE.STARTUPS ADD CONSTRAINT tags_fk FOREIGN KEY (TAGS_STARTU
         return copy_command
     col1,col2,col3,col4,col5,col6,col7,col8,col9=st.columns(9)
     with col1:
-        st.image("views/utils/cuadrado-inetum.png")
+        st.image("/home/site/wwwroot/App/views/utils/cuadrado-inetum.png")
     with col2:
         st.title(":red[Orchestrator]")
 
