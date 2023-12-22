@@ -10,3 +10,4 @@ streamlit.components.v1
 json
 typing
 ast
+streamlit
