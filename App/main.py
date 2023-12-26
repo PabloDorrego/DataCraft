@@ -52,8 +52,7 @@ def navigation():
         Orchestrator.load_view()
     elif route == "reverseDM":
         reverseDM.load_view()
-    elif route == "assistant":
-        abrir_pagina_web("https://sf-openai-bot.streamlit.app/")
+   
     elif route is None:
         home.load_view()
     

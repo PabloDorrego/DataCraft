@@ -29,7 +29,8 @@ def navbar_component():
     for key, value in SETTINGS.items():
         settings_items += (
             f'<a href="/?nav={value}" class="settingsNav">{key}</a>')
-
+    custom_link = '<a href="https://sf-openai-bot.streamlit.app/" class="settingsNav">Asistente SQL</a>'
+    settings_items += f'<div class="settingsNav">{custom_link}</div>'
     component = rf'''
             <nav class="container navbar" id="navbar">
                 <ul class="navlist">
