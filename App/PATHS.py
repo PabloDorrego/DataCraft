@@ -3,7 +3,8 @@ NAVBAR_PATHS = {
     'HOME': 'home',            # Ruta para la página principal
     'DOMAIN': 'connection',    # Ruta para la página de conexión
     'DATA MARTA': 'DMapp',   # Ruta para la página de DMapp
-    'DATA MARTA REVERSE': 'reverseDM'
+    'DATA MARTA REVERSE': 'reverseDM',
+    '🤖':'assistant'
 }
 
 # Definimos las configuraciones para la aplicación

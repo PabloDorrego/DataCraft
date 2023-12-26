@@ -3,7 +3,11 @@ import streamlit as st
 from openai import AzureOpenAI
 import utils as utl
 from views import home, DMapp, connection, Orchestrator, reverseDM
-from snowflake_openai_assistant import app
+import webbrowser
+
+# Función para abrir una página web
+def abrir_pagina_web(url):
+    webbrowser.open(url)
 
 # Configuramos la página de la aplicación Streamlit
 st.set_page_config(
@@ -48,10 +52,11 @@ def navigation():
         Orchestrator.load_view()
     elif route == "reverseDM":
         reverseDM.load_view()
-    elif route == "app":
-        app.load_view()
+    elif route == "assistant":
+        abrir_pagina_web("https://sf-openai-bot.streamlit.app/")
     elif route is None:
         home.load_view()
+    
 
 # Llamamos a la función de navegación para iniciar la aplicación
 navigation()
