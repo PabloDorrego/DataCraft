@@ -66,7 +66,7 @@ def create_domains(dominios, container):
 
 def generarSQL(container):
 
-	promt_sql= open('/home/site/wwwroot/App/views/utils/promptsql.txt', 'r').read()
+	promt_sql= open('App/views/utils/promptsql.txt', 'r').read()
 
 	st.session_state.messages.append({"role": "user", "content": promt_sql})
 	cl=st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)

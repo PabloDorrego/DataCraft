@@ -11,6 +11,7 @@ import streamlit as st
 
 def load_view():
     with st.sidebar:
+        st.image("App/views/utils/logo-inetum.svg")
         st.title('Ver códio SQL:')
         select=st.radio('',options=['Nueva tarea','Reestablecer orden de ejecución','Alterar estado tasks','Crear data marts','Crear constraints'])
         if select=='Nueva tarea':
@@ -276,11 +277,8 @@ ALTER TABLE GOLDEN_ZONE.STARTUPS ADD CONSTRAINT tags_fk FOREIGN KEY (TAGS_STARTU
 
         # Devolver la declaración COPY INTO generada.
         return copy_command
-    col1,col2,col3,col4,col5,col6,col7,col8,col9=st.columns(9)
-    with col1:
-        st.image("/home/site/wwwroot/App/views/utils/cuadrado-inetum.png")
-    with col2:
-        st.title(":red[Orchestrator]")
+    
+    st.title(":red[Snowflake extreme set up]")
 
     # Estilos y configuraciones adicionales
     st.markdown("""

@@ -72,7 +72,7 @@ def load_view():
     # Lógica para mostrar o generar el resultado
     if not st.session_state.display_result and not st.session_state.finish:
         metadata = st.session_state["prompt_metadata"]
-        promt_json = open('/home/site/wwwroot/App/views/utils/promptjson.txt', 'r').read()
+        promt_json = open('App/views/utils/promptjson.txt', 'r').read()
 
         if "messages" not in st.session_state:
             # Inicialización del chat
@@ -89,7 +89,7 @@ def load_view():
 
         with st.sidebar:
             # Crear la barra lateral
-            st.image("/home/site/wwwroot/App/views/utils/cuadrado-inetum.png")
+            st.image("App/views/utils/cuadrado-inetum.png")
             st.markdown("""<h1 style="color:#018579; ">Domain GenAI chatbot</h1>""", unsafe_allow_html=True)
 
             # Aceptar la entrada del usuario
@@ -140,7 +140,7 @@ def load_view():
         with container:
             dominios = get_JSON()
             if not st.session_state.finish:
-                st.image("/home/site/wwwroot/App/views/utils/logo-inetum.svg")
+                st.image("App/views/utils/logo-inetum.svg")
                 create_domains(dominios["dominios"], container)
                 send = st.button("Generar SQL y finalizar", on_click=fin)
             if st.session_state.finish:

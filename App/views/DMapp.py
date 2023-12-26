@@ -5,7 +5,7 @@ from views.utils import DataMart as me
 
 # Función para cargar la vista de Data Marta en la aplicación
 def load_view():
-    st.sidebar.image("/home/site/wwwroot/App/views/utils/cuadrado-inetum.png")
+    st.sidebar.image("App/views/utils/cuadrado-inetum.png")
     st.sidebar.header("Configuracion Azure OpenAI")
 
     # Entradas para configuración de Azure OpenAI

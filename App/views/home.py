@@ -6,7 +6,7 @@ def load_view():
     
     # Mostrar la primera imagen en la primera columna
     with img1:
-        st.image("/home/site/wwwroot/App/views/utils/logo-inetum.svg", width=300)
+        st.image("App/views/utils/logo-inetum.svg", width=300)
     
     # Título y encabezado principal
     st.title(':red[Snowflake GenAI]')

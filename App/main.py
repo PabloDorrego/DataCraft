@@ -3,6 +3,7 @@ import streamlit as st
 from openai import AzureOpenAI
 import utils as utl
 from views import home, DMapp, connection, Orchestrator, reverseDM
+from snowflake_openai_assistant import app
 
 # Configuramos la página de la aplicación Streamlit
 st.set_page_config(
@@ -47,6 +48,8 @@ def navigation():
         Orchestrator.load_view()
     elif route == "reverseDM":
         reverseDM.load_view()
+    elif route == "app":
+        app.load_view()
     elif route is None:
         home.load_view()
 
