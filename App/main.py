@@ -2,7 +2,7 @@
 import streamlit as st
 from openai import AzureOpenAI
 import utils as utl
-from views import home, DMapp, connection, Orchestrator, reverseDM
+from views import home, DMapp, connection, Orchestrator, reverseDM, app
 import webbrowser
 
 # Función para abrir una página web
@@ -52,6 +52,8 @@ def navigation():
         Orchestrator.load_view()
     elif route == "reverseDM":
         reverseDM.load_view()
+    elif route == "app":
+        app.load_view()
    
     elif route is None:
         home.load_view()

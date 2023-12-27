@@ -30,5 +30,7 @@ def load_view():
     # Sección de Data Marta
     with col2:
         st.header(":green[Data Marta]")
-        st.write("Permite la generación de los data marts así como las consultas SQL relativas.")
-        st.write("Se pone a disposición del usuario un chatbot que mostrará su propuesta en primer lugar.")
+        st.write("Permite la generación de los data marts así como las consultas SQL relativas y la propuesta de una serie de posibles kpis para dicho data mart.")
+        st.write("Se pone a disposición del usuario un chatbot que mostrará los data marts propuestos por la ia.")
+        st.header(":green[Data Marta Reverse]")
+        st.write("Permite identificar el data mart ideal para un determinado kpi. Además te propone el código sql para generar el kpi.")

@@ -8,5 +8,6 @@ NAVBAR_PATHS = {
 
 # Definimos las configuraciones para la aplicación
 SETTINGS = {
-    'Set up': 'orchestrator' 
+    'Set Up': 'orchestrator',
+    'SQL Assistant': 'app'
 }
