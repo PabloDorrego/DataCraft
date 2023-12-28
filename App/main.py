@@ -72,24 +72,24 @@ def navigation():
     if route == "home":
         home.load_view()
     elif route == "connection":
-        if not check_password():
-            st.stop()  # Do not continue if check_password is not True.
+        #if not check_password():
+        #    st.stop()  # Do not continue if check_password is not True.
         connection.load_view()
     elif route == "DMapp":
-        if not check_password():
-            st.stop()  # Do not continue if check_password is not True.
+        #if not check_password():
+        #    st.stop()  # Do not continue if check_password is not True.
         DMapp.load_view()
     elif route == "orchestrator":
-        if not check_password():
-            st.stop()  # Do not continue if check_password is not True.
+        #if not check_password():
+        #    st.stop()  # Do not continue if check_password is not True.
         Orchestrator.load_view()
     elif route == "reverseDM":
-        if not check_password():
-            st.stop()  # Do not continue if check_password is not True.
+        #if not check_password():
+        #    st.stop()  # Do not continue if check_password is not True.
         reverseDM.load_view()
     elif route == "app":
-        if not check_password():
-            st.stop()  # Do not continue if check_password is not True.
+        #if not check_password():
+        #    st.stop()  # Do not continue if check_password is not True.
         app.load_view()
    
     elif route is None:
