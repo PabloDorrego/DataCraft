@@ -286,7 +286,7 @@ class AnalyzeGPT(ChatGPT_Handler):
                 pass
             self.st.session_state[f"observation:{name}"] = data
 
-        max_steps = 20
+        max_steps = 15
         count = 1
 
         finish = False
