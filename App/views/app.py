@@ -65,7 +65,7 @@ def load_view():
 
 
     api_type = "azure"
-    api_version = "2023-03-15-preview"
+    api_version = "2023-10-01-preview"
     api_key = st.session_state.apikey
     api_base = st.session_state.endpoint
     max_response_tokens = 1500

@@ -31,6 +31,16 @@ def load_view():
     with col2:
         st.header(":green[Data Marta]")
         st.write("Permite la generación de los data marts así como las consultas SQL relativas y la propuesta de una serie de posibles kpis para dicho data mart.")
-        st.write("Se pone a disposición del usuario un chatbot que mostrará los data marts propuestos por la ia.")
         st.header(":green[Data Marta Reverse]")
         st.write("Permite identificar el data mart ideal para un determinado kpi. Además te propone el código sql para generar el kpi.")
+    st.markdown("------------------------------------------")
+    col3, col4 = st.columns(2)
+
+    with col3:
+        st.header(":red[Set up]")
+        st.write("Despliega rápidamente tu almacén en Snowflake a partir de archivos CSV almacenados en tu stage, sube los archivos a tu stage, crea los file formats, define tus capas y ejecuta la aplicación.")
+    
+    # Sección de Data Marta
+    with col4:
+        st.header(":red[SQL Assistant]")
+        st.write("Asistente de consultas SQL sobre tu warehouse de Snowflake, permite a través de GenAI generar consultas SQL así como analizar datos almacenados en tu almacén")

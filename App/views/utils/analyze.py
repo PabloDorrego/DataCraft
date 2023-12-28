@@ -281,12 +281,12 @@ class AnalyzeGPT(ChatGPT_Handler):
 
         def observe(name, data):
             try:
-                data = data[:10]  # limit the print out observation to 15 rows
+                data = data[:50]  # limit the print out observation to 15 rows
             except:
                 pass
             self.st.session_state[f"observation:{name}"] = data
 
-        max_steps = 15
+        max_steps = 20
         count = 1
 
         finish = False
