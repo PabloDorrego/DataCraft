@@ -9,10 +9,10 @@ def load_view():
     st.sidebar.header("Configuracion Azure OpenAI")
 
     # Entradas para configuración de Azure OpenAI
-    ao_key = st.sidebar.text_input("Azure api token: ", "f1b219e7d6254e77a47efce20d22df34", type="password")
+    ao_key = st.sidebar.text_input("Azure api token: ", type="password")
     ao_version = st.sidebar.text_input("Azure api version:", "2023-10-01-preview")
-    ao_endpoint = st.sidebar.text_input("Azure endopoint:", "https://domain-datamart-gpt4.openai.azure.com/", type="password")
-    dep_name = st.sidebar.text_input("Azure deployment name:", "genai-llm")
+    ao_endpoint = st.sidebar.text_input("Azure endopoint:",type="password")
+    dep_name = st.sidebar.text_input("Azure deployment name:")
 
     # Crear instancia de AzureOpenAI con las configuraciones
     client = AzureOpenAI(
@@ -27,10 +27,10 @@ def load_view():
     st.sidebar.header("Configuracion Snowflake")
 
     # Entradas para configuración de Snowflake
-    acc_input = st.sidebar.text_input("Identificador cuenta de Snowflake", "TGKDGYU-UA22805", type='password')
-    user_input = st.sidebar.text_input("Nombre de usuario", "SNOWPARK")
-    pass_input = st.sidebar.text_input("Contraseña", "Snowpark1", type='password')
-    input3 = st.sidebar.text_input("Base de datos:", "")
+    acc_input = st.sidebar.text_input("Identificador cuenta de Snowflake",type='password')
+    user_input = st.sidebar.text_input("Nombre de usuario")
+    pass_input = st.sidebar.text_input("Contraseña",type='password')
+    input3 = st.sidebar.text_input("Base de datos:",)
 
     # Título de la página
     st.title(":red[Data Marta]")

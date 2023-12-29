@@ -151,10 +151,10 @@ def load_view():
         # Configuración de la interfaz para la generación de dominios
         st.title(":red[DOMAIN]")
         st.header("Configuracion Azure OpenAI")
-        ao_key = st.text_input("Azure api token: ", "f1b219e7d6254e77a47efce20d22df34", type="password")
+        ao_key = st.text_input("Azure api token: ", type="password")
         ao_version = st.text_input("Azure api version:", "2023-10-01-preview")
-        ao_endpoint = st.text_input("Azure endopoint:", "https://domain-datamart-gpt4.openai.azure.com/", type="password")
-        dep_name = st.text_input("Azure deployment name:", "genai-llm")
+        ao_endpoint = st.text_input("Azure endopoint:",type="password")
+        dep_name = st.text_input("Azure deployment name:")
 
         client = AzureOpenAI(
             api_key=ao_key,
@@ -165,11 +165,11 @@ def load_view():
 
         st.header("Configuracion Snowflake")
 
-        acc_input = st.text_input("Identificador cuenta de Snowflake", "TGKDGYU-UA22805")
-        user_input = st.text_input("Nombre de usuario", "SNOWPARK")
-        pass_input = st.text_input("Contraseña", "Snowpark1", type='password')
+        acc_input = st.text_input("Identificador cuenta de Snowflake")
+        user_input = st.text_input("Nombre de usuario")
+        pass_input = st.text_input("Contraseña", type='password')
 
-        input3 = st.text_input("Base de datos:", "DEMO")
+        input3 = st.text_input("Base de datos:")
 
         st.header("Información de la empresa")
         des = get_des() 
