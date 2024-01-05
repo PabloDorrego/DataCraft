@@ -15,7 +15,9 @@ import sqlalchemy as sql
 from plotly.graph_objects import Figure
 import time
 
-
+#recupera información sobre tablas y columnas en una base de datos Snowflake.
+#Toma una herramienta de consulta SQL y un esquema de base de datos (opcional) como entrada
+#y ejecuta una consulta SQL para obtener la información de la tabla y la columna.
 def get_table_schema(sql_query_tool, db_schema=None):
     # Define the SQL query to retrieve table and column information
     if db_schema is not None:
@@ -68,7 +70,9 @@ def get_table_schema(sql_query_tool, db_schema=None):
     output = "\n ".join(output)
     return output
 
-
+#manejar las solicitudes de conversación a través de la API de chat de OpenAI. 
+#Tiene métodos para realizar llamadas a la API de OpenAI y extraer información del texto 
+#de respuesta utilizando patrones de extracción.
 class ChatGPT_Handler:  # designed for chat completion API
     def __init__(
         self,
@@ -91,7 +95,10 @@ class ChatGPT_Handler:  # designed for chat completion API
         self.api_base=api_base
         self.temperature = temperature
         self.extract_patterns = extract_patterns
-
+    # Esta función realiza una llamada a la API de OpenAI para obtener una respuesta.
+    # Toma una cadena de entrada 'prompt' y una lista de paradas 'stop' como argumentos.
+    # Utiliza la información de configuración de la clase para realizar la llamada.
+    # Devuelve la respuesta generada por OpenAI.
     def _call_llm(self, prompt, stop):
         client=openai.AzureOpenAI(
             api_key=self.api_key,  
@@ -111,7 +118,9 @@ class ChatGPT_Handler:  # designed for chat completion API
             llm_output = response.choices[0].message.content
         return llm_output
 
-
+    # Esta función extrae información específica del texto de entrada utilizando patrones de extracción.
+    # Toma el texto de entrada 'text_input' como argumento y busca patrones predefinidos.
+    # Devuelve un diccionario con la información extraída.
     def extract_output(self, text_input):
         output = {}
         if text_input is None or len(text_input) == 0:
@@ -148,7 +157,9 @@ class ChatGPT_Handler:  # designed for chat completion API
 
         return output
 
-
+#hereda de ChatGPT_Handler y se utiliza para realizar consultas SQL en una base de datos 
+#Snowflake. Tiene métodos para ejecutar consultas SQL y devolver los resultados en un 
+#DataFrame de pandas.
 class SQL_Query(ChatGPT_Handler):
     def __init__(
         self,
@@ -178,7 +189,10 @@ class SQL_Query(ChatGPT_Handler):
         self.db_name = db_name
         self.db_schema = db_schema
         self.db_warehouse = db_warehouse
-
+    # Esta función ejecuta una consulta SQL en una base de datos Snowflake.
+    # Toma una consulta SQL 'query' y un límite opcional como argumentos.
+    # Utiliza la información de conexión de la clase para ejecutar la consulta.
+    # Devuelve los resultados de la consulta en un DataFrame de pandas.
     def execute_sql_query(self, query, limit=10000):
         connection_string = f"snowflake://{self.db_user}:{self.db_password}@{self.account_identifier}/{self.db_name}/{self.db_schema}?warehouse={self.db_warehouse}&role={self.db_role}"
         engine = create_engine(connection_string)
@@ -194,7 +208,11 @@ class SQL_Query(ChatGPT_Handler):
 
         return result
 
-
+#hereda de ChatGPT_Handler y se utiliza para analizar datos y responder preguntas basadas 
+#en datos utilizando OpenAI GPT-4. Se inicializa con información sobre tablas y columnas 
+#en la base de datos, así como mensajes de sistema y ejemplos de pocos disparos.
+#Tiene métodos para obtener los siguientes pasos en la conversación y ejecutar acciones 
+#basadas en el código Python proporcionado por GPT-4.
 class AnalyzeGPT(ChatGPT_Handler):
     def __init__(
         self,
@@ -219,7 +237,10 @@ class AnalyzeGPT(ChatGPT_Handler):
         self.st = st
         self.content_extractor = content_extractor
         self.sql_query_tool = sql_query_tool
-
+    # Esta función obtiene los siguientes pasos en la conversación con OpenAI GPT-4.
+    # Toma una cadena de entrada actualizada 'updated_user_content' y una lista de paradas 'stop' como argumentos.
+    # Llama a '_call_llm' para obtener la respuesta de GPT-4 y extrae los siguientes pasos de la conversación.
+    # Devuelve la respuesta de GPT-4 y una lista de los siguientes pasos extraídos. 
     def get_next_steps(self, updated_user_content, stop):
         old_user_content = ""
         if len(self.conversation_history) > 1:
@@ -252,7 +273,10 @@ class AnalyzeGPT(ChatGPT_Handler):
             llm_output = "WRONG_OUTPUT_FORMAT"
 
         return llm_output, output
-
+    # Esta función se utiliza para realizar un análisis de datos basado en la pregunta del usuario.
+    # Toma una pregunta 'question' y otros argumentos opcionales.
+    # Utiliza métodos y funciones auxiliares para realizar el análisis paso a paso.
+    # Muestra los resultados y observaciones al usuario durante el proceso de análisis.
     def run(self, question: str, show_code, show_prompt, st) -> any:
         import numpy as np
         import plotly.express as px
@@ -260,7 +284,9 @@ class AnalyzeGPT(ChatGPT_Handler):
         import pandas as pd
 
         st.write(f"Question: {question}")
-
+        #Las funciones execute_sql, show, y observe son funciones auxiliares utilizadas para 
+        #ejecutar consultas SQL, mostrar datos al usuario y observar datos durante el proceso 
+        #de análisis.
         def execute_sql(query):
             return self.sql_query_tool.execute_sql_query(query)
 
@@ -361,7 +387,9 @@ class AnalyzeGPT(ChatGPT_Handler):
             if count >= max_steps:
                 print("Exceeding threshold, finish")
                 break
-
+    # Esta función se utiliza para ejecutar consultas SQL en una base de datos Snowflake basadas en la pregunta del usuario.
+    # Toma una pregunta 'question' y otros argumentos opcionales.
+    # Utiliza métodos y funciones auxiliares para ejecutar la consulta SQL y mostrar los resultados al usuario.
     def query_run(self, question: str, show_code, show_prompt, st) -> any:
         st.write(f"Question: {question}")
 

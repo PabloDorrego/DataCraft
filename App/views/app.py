@@ -8,12 +8,13 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 def load_view():
-    # Only load the settings if they are running local and not in Azure
+    # verifica si la aplicación se está ejecutando localmente o en Azure y carga 
+    #las variables de entorno correspondientes desde un archivo "secrets.env" si es necesario.
     if os.getenv("WEBSITE_SITE_NAME") is None:
         env_path = Path(".") / "secrets.env"
         load_dotenv(dotenv_path=env_path)
 
-
+    # carga una configuración de una variable de entorno o usa un valor predeterminado si no está definida.
     def load_setting(setting_name, session_name, default_value=""):
         """
         Function to load the setting information from session
@@ -42,7 +43,7 @@ def load_view():
     if "show_settings" not in st.session_state:
         st.session_state["show_settings"] = False
 
-
+    # guarda las configuraciones de OpenAI y Snowflake en la sesión.
     def saveOpenAI():
         #st.session_state.chatgpt = st.session_state.txtChatGPT
         st.session_state.gpt4 = st.session_state.txtGPT4
@@ -59,11 +60,11 @@ def load_view():
         # We can close out the settings now
         st.session_state["show_settings"] = False
 
-
+    # mostrar u ocultar las configuraciones en la interfaz de usuario.
     def toggleSettings():
         st.session_state["show_settings"] = not st.session_state["show_settings"]
 
-
+    # Definición de variables de configuración para Azure OpenAI
     api_type = "azure"
     api_version = "2023-10-01-preview"
     api_key = st.session_state.apikey
@@ -73,26 +74,6 @@ def load_view():
     temperature = 0.2
 
     
-
-    def inject_custom_css():
-        with open('App/assets/styles.css') as f:
-            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-    def nav_bar():
-        # Botón personalizado para redirigir a otra página web
-        custom_button = '<a class="navitem" href="https://snowflakegenai.azurewebsites.net" target="_blank" style="font-size: 150%; height: 100%; line-height: 100%; ">🏡</a>'
-
-        component = rf'''
-                <nav class="container navbar" id="navbar">
-                    <ul class="navlist">
-                    {custom_button}
-                    </ul>
-                </nav>
-                '''
-        st.markdown(component, unsafe_allow_html=True)
-    #inject_custom_css()
-    #st.markdown('<div style="position: fixed; top: 0; left: 0; width: 100%;">', unsafe_allow_html=True)
-    #nav_bar()
-    #st.markdown('</div>', unsafe_allow_html=True)
     st.title('Snowflake OpenAI Assistant')
     st.write('Este es un asistente experimental que requiere acceso a Azure OpenAI. La aplicación permite el uso de OpenAI para ayudar a obtener información de Snowflake con solo hacer preguntas. El asistente también puede generar código SQL y Python para las Preguntas.')
     # Estilos y configuraciones adicionales
@@ -123,10 +104,12 @@ def load_view():
 
     with st.sidebar:
         st.image("App/views/utils/logo-inetum.svg")
+        #barra lateral con opciones para elegir entre dos aplicaciones: "SQL Assistant" y "Data Analysis Assistant".
         options = ("SQL Assistant", "Data Analysis Assistant")
         index = st.radio(
             "Choose the app", range(len(options)), format_func=lambda x: options[x]
         )
+        #Si se elige la opción "SQL Assistant", se muestra un mensaje de sistema y se configura un extractor para analizar preguntas y consultas SQL.
         if index == 0:
             system_message = """
             You are an agent designed to interact with a Snowflake with schema detail in Snowflake.
@@ -141,7 +124,7 @@ def load_view():
             few_shot_examples = ""
             extract_patterns = [("sql", r"```sql\n(.*?)```")]
             extractor = ChatGPT_Handler(extract_patterns=extract_patterns)
-
+        #Si se elige la opción "Data Analysis Assistant", se muestra un mensaje de sistema y se configura un extractor para analizar el flujo de pensamiento del asistente de análisis de datos.
         elif index == 1:
             system_message = """
             You are a smart AI assistant to help answer business questions based on analyzing data. 
@@ -205,7 +188,7 @@ def load_view():
                 ("Answer:", r"([Aa]nswer:) (.*)"),
             ]
             extractor = ChatGPT_Handler(extract_patterns=extract_patterns)
-
+        #"Settings" para mostrar u ocultar las configuraciones.
         st.button("Settings", on_click=toggleSettings)
         if st.session_state["show_settings"]:
             with st.form("AzureOpenAI"):
@@ -259,7 +242,8 @@ def load_view():
         show_code = st.checkbox("Show code", value=False)
         show_prompt = st.checkbox("Show prompt", value=False)
         question = st.text_area("Ask me a question")
-
+        #Si se presiona el botón "Submit", se verifica que las configuraciones necesarias estén 
+        #completas y se crea un objeto SQL_Query y un objeto AnalyzeGPT para interactuar con Snowflake y OpenAI GPT-4, respectivamente.
         if st.button("Submit"):
             if (
                 st.session_state.apikey == ""
@@ -300,6 +284,8 @@ def load_view():
                     temperature=temperature,
                     db_schema=st.session_state.snowschema
                 )
+                #Dependiendo de la opción seleccionada ("SQL Assistant" o "Data Analysis Assistant"), 
+                #se llama a la función correspondiente para ejecutar la consulta o el análisis de datos.
                 if index == 0:
                     analyzer.query_run(question, show_code, show_prompt, col1)
                 elif index == 1:
