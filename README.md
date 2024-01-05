@@ -59,6 +59,6 @@ Creación DataWareHouse en Snowflake:
 5- Realizará la carga de datos desde los archivos CSV en el stage hacia la capa Bronze. 
 ### Analysis Assistant
 Por último se añade un asistente para el análisis de datos almacenados en Snowflake mediante lenguaje natural.
--Asistente de redacción de consultas SQL: una aplicación sencilla que traduce preguntas comerciales al lenguaje de consultas SQL y luego las ejecuta y muestra los resultados.
--Asistente de análisis de datos: una aplicación más sofisticada para realizar análisis de datos avanzados, como análisis estadísticos y pronósticos. Aquí demostramos el uso de las técnicas de Cadena de Pensamiento y Reacción para realizar un procesamiento de varios pasos donde el siguiente paso de la cadena también depende de la observación/resultado del paso anterior.
+- Asistente de redacción de consultas SQL: una aplicación sencilla que traduce preguntas comerciales al lenguaje de consultas SQL y luego las ejecuta y muestra los resultados.
+- Asistente de análisis de datos: una aplicación más sofisticada para realizar análisis de datos avanzados, como análisis estadísticos y pronósticos. Aquí demostramos el uso de las técnicas de Cadena de Pensamiento y Reacción para realizar un procesamiento de varios pasos donde el siguiente paso de la cadena también depende de la observación/resultado del paso anterior.
 
