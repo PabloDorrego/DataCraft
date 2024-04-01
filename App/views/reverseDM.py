@@ -108,7 +108,8 @@ def load_view():
             height: 100% !important;
         }
         div[data-testid="collapsedControl"] {
-            top: 100px !important;
+            visibility: visible;
+
         }
         </style>""", unsafe_allow_html=True)
     

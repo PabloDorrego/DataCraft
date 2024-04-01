@@ -35,7 +35,7 @@ def load_view():
     # Título de la página
     st.title(":red[Data Marta]")
 
-    # Estilos y configuraciones adicionales
+    #Estilos y configuraciones adicionales
     st.markdown("""
         <style>
         section[data-testid="stSidebar"]{
@@ -43,7 +43,7 @@ def load_view():
             height: 100% !important;
         }
         div[data-testid="collapsedControl"] {
-            top: 100px !important;
+            visibility: visible;
         }
         </style>""", unsafe_allow_html=True)
     
