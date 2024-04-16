@@ -8,9 +8,10 @@ numpy
 pandas
 plotly==5.9.0
 python-dotenv==1.0.0
-SQLAlchemy==1.4.47
-snowflake-sqlalchemy==1.4.7
 pyarrow==10.0.1
 scikit-learn
 pmdarima
 matplotlib
+streamlit_navigation_bar
+utils
+streamlit-authenticator

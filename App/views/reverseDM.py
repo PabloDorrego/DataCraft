@@ -3,6 +3,7 @@ from openai import AzureOpenAI, OpenAI
 from snowflake.snowpark import Session
 import json
 import streamlit as st
+
 def snowpark_auth(account, user, password) -> Session:
     connection_parameters = {
         "ACCOUNT": account,

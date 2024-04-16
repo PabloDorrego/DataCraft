@@ -149,29 +149,29 @@ def load_view():
 
     if st.session_state.display_result:
         # Configuración de la interfaz para la generación de dominios
-        st.title(":red[DOMAIN]")
-        st.header("Configuracion Azure OpenAI")
-        ao_key = st.text_input("Azure api token: ", type="password")
-        ao_version = st.text_input("Azure api version:", "2023-10-01-preview")
-        ao_endpoint = st.text_input("Azure endopoint:",type="password")
-        dep_name = st.text_input("Azure deployment name:")
+        # st.title(":red[DOMAIN]")
+        # st.header("Configuracion Azure OpenAI")
+        # ao_key = st.text_input("Azure api token: ", type="password")
+        # ao_version = st.text_input("Azure api version:", "2023-10-01-preview")
+        # ao_endpoint = st.text_input("Azure endopoint:",type="password")
+        # dep_name = st.text_input("Azure deployment name:")
 
-        client = AzureOpenAI(
-            api_key=ao_key,
-            api_version=ao_version,
-            azure_endpoint=ao_endpoint
-        )
-        model = dep_name
+        # client = AzureOpenAI(
+        #     api_key=ao_key,
+        #     api_version=ao_version,
+        #     azure_endpoint=ao_endpoint
+        # )
+        # model = dep_name
 
-        st.header("Configuracion Snowflake")
+        # st.header("Configuracion Snowflake")
 
-        acc_input = st.text_input("Identificador cuenta de Snowflake")
-        user_input = st.text_input("Nombre de usuario")
-        pass_input = st.text_input("Contraseña", type='password')
+        # acc_input = st.text_input("Identificador cuenta de Snowflake")
+        # user_input = st.text_input("Nombre de usuario")
+        # pass_input = st.text_input("Contraseña", type='password')
 
-        input3 = st.text_input("Base de datos:")
-
+        # input3 = st.text_input("Base de datos:")
         st.header("Información de la empresa")
         des = get_des() 
         area = get_area()   
         send = st.button("Generar", disabled=(area is ""), on_click=callback)
+        st.text(st.session_state.ao_key)
