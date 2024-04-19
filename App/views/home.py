@@ -58,6 +58,23 @@ def load_view():
     # st.text_input("Base de datos:",key='input3')
 
     with st.form("config_form"):
+        #Inicializar session state
+        if 'ao_key' not in st.session_state:
+            st.session_state['ao_key'] = ""
+        if 'ao_version' not in st.session_state:
+            st.session_state['ao_version'] = ""
+        if "ao_endpoint" not in st.session_state:
+            st.session_state['ao_endpoint'] = ""
+        if 'dep_name' not in st.session_state:
+            st.session_state['dep_name'] = ""
+        if "acc_input" not in st.session_state:
+            st.session_state['acc_input'] = ""
+        if 'user_input' not in st.session_state:
+            st.session_state['user_input'] = ""
+        if "pass_input" not in st.session_state:
+            st.session_state['pass_input'] = ""     
+        if "input3" not in st.session_state:
+            st.session_state['input3'] = ""                    
         st.header("Configuracion Azure OpenAI")
 
         ao_key=st.text_input("Azure api token: ", type="password",value=st.session_state.ao_key)
