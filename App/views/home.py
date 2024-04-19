@@ -1,17 +1,5 @@
 import streamlit as st
 # Función para cargar la vista principal (home) de la aplicación
-def save_config():
-    # cargar inputs en session state
-    st.session_state.acc_input = acc_input
-    st.session_state.user_input = user_input
-    st.session_state.pass_input = pass_input
-    st.session_state.input3 = input3
-
-    st.session_state.ao_key = ao_key
-    st.session_state.ao_version = ao_version
-    st.session_state.ao_endpoint = ao_endpoint
-    st.session_state.dep_name = dep_name
-
 def load_view():
     # Crear columnas para las imágenes
     img1, img2, img3,img4, img5 = st.columns(5)
@@ -72,17 +60,17 @@ def load_view():
     with st.form("config_form"):
         st.header("Configuracion Azure OpenAI")
 
-        ao_key=st.text_input("Azure api token: ", type="password")
-        ao_version=st.text_input("Azure api version:", "2023-10-01-preview")
-        ao_endpoint=st.text_input("Azure endopoint:",type="password")
-        dep_name=st.text_input("Azure deployment name:")
+        ao_key=st.text_input("Azure api token: ", type="password",value=st.session_state.ao_key)
+        ao_version=st.text_input("Azure api version:", value="2023-10-01-preview")
+        ao_endpoint=st.text_input("Azure endopoint:",type="password",value=st.session_state.ao_endpoint)
+        dep_name=st.text_input("Azure deployment name:",value=st.session_state.dep_name)
         
         st.header("Configuracion Snowflake")
         
-        acc_input=st.text_input("Identificador cuenta de Snowflake")
-        user_input=st.text_input("Nombre de usuario")
-        pass_input=st.text_input("Contraseña", type='password')
-        input3=st.text_input("Base de datos:")
+        acc_input=st.text_input("Identificador cuenta de Snowflake",value=st.session_state.acc_input)#JMQWFZT-DJ11978
+        user_input=st.text_input("Nombre de usuario",value=st.session_state.user_input)#PabloDorrego
+        pass_input=st.text_input("Contraseña", type='password',value=st.session_state.pass_input)
+        input3=st.text_input("Base de datos:",value=st.session_state.input3)#FINANCIAL__ECONOMIC_ESSENTIALS
         # Every form must have a submit button.
         submitted = st.form_submit_button("Guardar configuración")
         if submitted:
