@@ -46,40 +46,54 @@ def load_view():
         st.header(":green[Data Marta Reverse]")
         st.write("Permite identificar el data mart ideal para un determinado kpi. Además te propone el código sql para generar el kpi.")
     st.markdown("------------------------------------------")
-       # iniciar session state
-    st.session_state.acc_input = None
-    st.session_state.user_input = None
-    st.session_state.pass_input = None
-    st.session_state.input3 = None
-    st.session_state.ao_key = None
-    st.session_state.ao_version = None
-    st.session_state.ao_endpoint = None
-    st.session_state.dep_name = None
+    # iniciar/reset session state
+    # st.session_state.acc_input = None
+    # st.session_state.user_input = None
+    # st.session_state.pass_input = None
+    # st.session_state.input3 = None
+    # st.session_state.ao_key = None
+    # st.session_state.ao_version = None
+    # st.session_state.ao_endpoint = None
+    # st.session_state.dep_name = None
+    # st.header("Configuracion Azure OpenAI")
 
-    st.header("Configuracion Azure OpenAI")
-    ao_key = st.text_input("Azure api token: ", type="password")
-    st.session_state.ao_key = ao_key
+    # st.text_input("Azure api token: ", type="password",key='ao_key')
+    # st.text_input("Azure api version:", "2023-10-01-preview",key='ao_version')
+    # st.text_input("Azure endopoint:",type="password",key='ao_endpoint')
+    # st.text_input("Azure deployment name:",key='dep_name')
+    
+    # st.header("Configuracion Snowflake")
+    
+    # st.text_input("Identificador cuenta de Snowflake",key='acc_input')
+    # st.text_input("Nombre de usuario",key='user_input')
+    # st.text_input("Contraseña", type='password',key='pass_input')
+    # st.text_input("Base de datos:",key='input3')
 
-    ao_version = st.text_input("Azure api version:", "2023-10-01-preview")
-    st.session_state.ao_version = ao_version
-    ao_endpoint = st.text_input("Azure endopoint:",type="password")
-    st.session_state.ao_endpoint = ao_endpoint
-    dep_name = st.text_input("Azure deployment name:")
-    st.session_state.dep_name = dep_name
+    with st.form("config_form"):
+        st.header("Configuracion Azure OpenAI")
 
-    
-    st.header("Configuracion Snowflake")
-    
-    acc_input = st.text_input("Identificador cuenta de Snowflake")
-    st.session_state.acc_input = acc_input
-    user_input = st.text_input("Nombre de usuario")
-    st.session_state.user_input = user_input
-    pass_input = st.text_input("Contraseña", type='password')
-    st.session_state.pass_input = pass_input
-    
-    input3 = st.text_input("Base de datos:")
-    st.session_state.input3 = input3
-    #boton para guardar configuracion
-    #st.button("Guardar configuracion", on_click=save_config)
+        ao_key=st.text_input("Azure api token: ", type="password")
+        ao_version=st.text_input("Azure api version:", "2023-10-01-preview")
+        ao_endpoint=st.text_input("Azure endopoint:",type="password")
+        dep_name=st.text_input("Azure deployment name:")
+        
+        st.header("Configuracion Snowflake")
+        
+        acc_input=st.text_input("Identificador cuenta de Snowflake")
+        user_input=st.text_input("Nombre de usuario")
+        pass_input=st.text_input("Contraseña", type='password')
+        input3=st.text_input("Base de datos:")
+        # Every form must have a submit button.
+        submitted = st.form_submit_button("Guardar configuración")
+        if submitted:
+            st.session_state.ao_key = ao_key
+            st.session_state.ao_version = ao_version
+            st.session_state.ao_endpoint = ao_endpoint
+            st.session_state.dep_name = dep_name
+            st.session_state.acc_input = acc_input
+            st.session_state.user_input = user_input
+            st.session_state.pass_input = pass_input
+            st.session_state.input3 = input3
+
 
 

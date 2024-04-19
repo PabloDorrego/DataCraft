@@ -58,7 +58,7 @@ def load_view():
         # Lógica para manejar la entrada del usuario y generar el prompt
         if des:
             st.session_state.client = client
-            prompt_metadata = me.get_metadata(acc_input, user_input, pass_input, input3)
+            prompt_metadata = me.get_metadata(st.session_state.acc_input, st.session_state.user_input, st.session_state.pass_input, st.session_state.input3)
             prompt_metadata += f"\n\nEsta es la descripción de la empresa: {st.session_state.description}\nEstas son las áreas de negocio: {st.session_state.area}"
             st.session_state['area'] = area
             st.session_state['description'] = des
@@ -156,12 +156,12 @@ def load_view():
         # ao_endpoint = st.text_input("Azure endopoint:",type="password")
         # dep_name = st.text_input("Azure deployment name:")
 
-        # client = AzureOpenAI(
-        #     api_key=ao_key,
-        #     api_version=ao_version,
-        #     azure_endpoint=ao_endpoint
-        # )
-        # model = dep_name
+        client = AzureOpenAI(
+            api_key=st.session_state.ao_key,
+            api_version=st.session_state.ao_version,
+            azure_endpoint=st.session_state.ao_endpoint
+        )
+        model = st.session_state.dep_name
 
         # st.header("Configuracion Snowflake")
 
@@ -174,4 +174,3 @@ def load_view():
         des = get_des() 
         area = get_area()   
         send = st.button("Generar", disabled=(area is ""), on_click=callback)
-        st.text(st.session_state.ao_key)
