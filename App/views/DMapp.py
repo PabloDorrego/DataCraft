@@ -5,32 +5,52 @@ from views.utils import DataMart as me
 
 # Función para cargar la vista de Data Marta en la aplicación
 def load_view():
-    st.sidebar.image("App/views/utils/cuadrado-inetum.png")
-    st.sidebar.header("Configuracion Azure OpenAI")
+    # st.sidebar.image("App/views/utils/cuadrado-inetum.png")
+    # st.sidebar.header("Configuracion Azure OpenAI")
 
     # Entradas para configuración de Azure OpenAI
-    ao_key = st.sidebar.text_input("Azure api token: ", type="password")
-    ao_version = st.sidebar.text_input("Azure api version:", "2023-10-01-preview")
-    ao_endpoint = st.sidebar.text_input("Azure endopoint:",type="password")
-    dep_name = st.sidebar.text_input("Azure deployment name:")
+        # ao_key = st.sidebar.text_input("Azure api token: ", type="password")
+        # ao_version = st.sidebar.text_input("Azure api version:", "2023-10-01-preview")
+        # ao_endpoint = st.sidebar.text_input("Azure endopoint:",type="password")
+        # dep_name = st.sidebar.text_input("Azure deployment name:")
+    if 'ao_key' not in st.session_state:
+        st.session_state['ao_key'] = ""
+    if 'ao_version' not in st.session_state:
+        st.session_state['ao_version'] = ""
+    if "ao_endpoint" not in st.session_state:
+        st.session_state['ao_endpoint'] = ""
+    if 'dep_name' not in st.session_state:
+        st.session_state['dep_name'] = ""
+    if "acc_input" not in st.session_state:
+        st.session_state['acc_input'] = ""
+    if 'user_input' not in st.session_state:
+        st.session_state['user_input'] = ""
+    if "pass_input" not in st.session_state:
+        st.session_state['pass_input'] = ""     
+    if "input3" not in st.session_state:
+        st.session_state['input3'] = ""
+    if "model" not in st.session_state:
+        st.session_state['model'] = ""
+
 
     # Crear instancia de AzureOpenAI con las configuraciones
     client = AzureOpenAI(
-        api_key=ao_key,  
-        api_version=ao_version,
-        azure_endpoint=ao_endpoint
+        api_key=st.session_state.ao_key,  
+        api_version=st.session_state,
+        azure_endpoint=st.session_state.ao_endpoint
     )
-    st.session_state["client"]=client
-    model = dep_name
-    st.session_state["model"]=model
+    # st.session_state["client"]=client
+    # model = dep_name
+    # st.session_state["model"]=model
+    st.session_state.model=st.session_state.dep_name
 
-    st.sidebar.header("Configuracion Snowflake")
+    #st.sidebar.header("Configuracion Snowflake")
 
     # Entradas para configuración de Snowflake
-    acc_input = st.sidebar.text_input("Identificador cuenta de Snowflake",type='password')
-    user_input = st.sidebar.text_input("Nombre de usuario")
-    pass_input = st.sidebar.text_input("Contraseña",type='password')
-    input3 = st.sidebar.text_input("Base de datos:",)
+    # acc_input = st.sidebar.text_input("Identificador cuenta de Snowflake",type='password')
+    # user_input = st.sidebar.text_input("Nombre de usuario")
+    # pass_input = st.sidebar.text_input("Contraseña",type='password')
+    # input3 = st.sidebar.text_input("Base de datos:",)
 
     # Título de la página
     st.title(":red[Data Marta]")
@@ -69,7 +89,7 @@ def load_view():
 
     # Botón para generar el metadata prompt
     if st.sidebar.button("Comenzar"):
-        prompt_metadata = me.get_metadata(acc_input, user_input, pass_input, input3)
+        prompt_metadata = me.get_metadata(st.session_state.acc_input, st.session_state.user_input, st.session_state.pass_input, st.session_state.input3)
         prompt_metadata += f"\n\nEstos son los dominios de la empresa: {input1}\n\nEstos son los dominios de datos: {input2}"
 
     try: 

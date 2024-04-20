@@ -98,6 +98,25 @@ Si no encuentras una respuesta coherente con los metadatos no hagas nada.
     return prompt
 # Función para cargar la vista de Data Marta en la aplicación
 def load_view():
+    if 'ao_key' not in st.session_state:
+        st.session_state['ao_key'] = ""
+    if 'ao_version' not in st.session_state:
+        st.session_state['ao_version'] = ""
+    if "ao_endpoint" not in st.session_state:
+        st.session_state['ao_endpoint'] = ""
+    if 'dep_name' not in st.session_state:
+        st.session_state['dep_name'] = ""
+    if "acc_input" not in st.session_state:
+        st.session_state['acc_input'] = ""
+    if 'user_input' not in st.session_state:
+        st.session_state['user_input'] = ""
+    if "pass_input" not in st.session_state:
+        st.session_state['pass_input'] = ""     
+    if "input3" not in st.session_state:
+        st.session_state['input3'] = ""
+    if "model" not in st.session_state:
+        st.session_state['model'] = ""
+
     # Título de la página
     st.title(":red[Data Marta Reverse]")
 
@@ -126,68 +145,72 @@ def load_view():
     )
 
     # Barra lateral con configuraciones de Azure OpenAI y Snowflake
-    st.sidebar.image("App/views/utils/cuadrado-inetum.png")
-    st.sidebar.header("Configuracion Azure OpenAI")
+    # st.sidebar.image("App/views/utils/cuadrado-inetum.png")
+    # st.sidebar.header("Configuracion Azure OpenAI")
 
-    # Entradas para configuración de Azure OpenAI
-    ao_key = st.sidebar.text_input("Azure api token: ", type="password")
-    ao_version = st.sidebar.text_input("Azure api version:", "2023-10-01-preview")
-    ao_endpoint = st.sidebar.text_input("Azure endopoint:",type="password")
-    dep_name = st.sidebar.text_input("Azure deployment name:")
+    # # Entradas para configuración de Azure OpenAI
+    # ao_key = st.sidebar.text_input("Azure api token: ", type="password")
+    # ao_version = st.sidebar.text_input("Azure api version:", "2023-10-01-preview")
+    # ao_endpoint = st.sidebar.text_input("Azure endopoint:",type="password")
+    # dep_name = st.sidebar.text_input("Azure deployment name:")
 
     # Crear instancia de AzureOpenAI con las configuraciones
     client = AzureOpenAI(
-        api_key=ao_key,  
-        api_version=ao_version,
-        azure_endpoint=ao_endpoint
+        api_key=st.session_state.ao_key,  
+        api_version=st.session_state.ao_version,
+        azure_endpoint=st.session_state.ao_endpoint
     )
-    model = dep_name
+    #model = dep_name
+    st.session_state.model=st.session_state.dep_name
 
-    st.sidebar.header("Configuracion Snowflake")
 
-    # Entradas para configuración de Snowflake
-    acc_input = st.sidebar.text_input("Identificador cuenta de Snowflake",type='password')
-    user_input = st.sidebar.text_input("Nombre de usuario")
-    pass_input = st.sidebar.text_input("Contraseña",type='password')
-    input3 = st.sidebar.text_input("Base de datos:", "")
+    # st.sidebar.header("Configuracion Snowflake")
+
+    # # Entradas para configuración de Snowflake
+    # acc_input = st.sidebar.text_input("Identificador cuenta de Snowflake",type='password')
+    # user_input = st.sidebar.text_input("Nombre de usuario")
+    # pass_input = st.sidebar.text_input("Contraseña",type='password')
+    # input3 = st.sidebar.text_input("Base de datos:", "")
 
 
 
     # Botón para generar el metadata prompt
-    if st.sidebar.button("Comenzar"):
-        prompt_metadata = get_metadata(acc_input,user_input,pass_input,input3)
+    if st.button("Comenzar"):
+        #prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
 
-    try: 
-        if "messages_datamart" not in st.session_state:
-            st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
+        try: 
+            prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
 
-        # Interfaz del chatbot y manejo de mensajes
-        if prompt := st.chat_input():
-            st.session_state.messages_datamart.append({"role": "user", "content": prompt})
+            if "messages_datamart" not in st.session_state:
+                st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
 
-        for message in st.session_state.messages_datamart:
-            if message["role"] == "system":
-                continue
-            with st.chat_message(message["role"]):
-                st.write(message["content"])
-                if "results" in message:
-                    st.dataframe(message["results"])
+            # Interfaz del chatbot y manejo de mensajes
+            if prompt := st.chat_input():
+                st.session_state.messages_datamart.append({"role": "user", "content": prompt})
 
-        if st.session_state.messages_datamart[-1]["role"] != "assistant":
-            with st.chat_message("assistant"):
-                response = ""
-                resp_container = st.empty()
-                for delta in client.chat.completions.create(
-                        model=model,
-                        messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
-                        stream=True,
-                ):
-                    if delta.choices:
-                        response += (delta.choices[0].delta.content or "")
-                    resp_container.markdown(response)
+            for message in st.session_state.messages_datamart:
+                if message["role"] == "system":
+                    continue
+                with st.chat_message(message["role"]):
+                    st.write(message["content"])
+                    if "results" in message:
+                        st.dataframe(message["results"])
 
-                message = {"role": "assistant", "content": response}
-                st.session_state.messages_datamart.append(message)
-    except:
-        st.error("Por favor, rellene todos los campos de configuración")
-        st.stop()
+            if st.session_state.messages_datamart[-1]["role"] != "assistant":
+                with st.chat_message("assistant"):
+                    response = ""
+                    resp_container = st.empty()
+                    for delta in client.chat.completions.create(
+                            model=model,
+                            messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
+                            stream=True,
+                    ):
+                        if delta.choices:
+                            response += (delta.choices[0].delta.content or "")
+                        resp_container.markdown(response)
+
+                    message = {"role": "assistant", "content": response}
+                    st.session_state.messages_datamart.append(message)
+        except:
+            st.error("Por favor, revise la configuración de Snowflake")
+            st.stop()
