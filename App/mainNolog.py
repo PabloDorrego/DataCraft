@@ -3,31 +3,40 @@ from streamlit_navigation_bar import st_navbar
 from views import home, DMapp, connection, reverseDM
 import streamlit as st
 import streamlit_authenticator as stauth
+import os
 st.set_page_config(layout="wide")
 pages = ["Home","Domain", "Data Marta", "Data Marta Reverse", "GitHub"]
 urls = {"GitHub": "https://github.com/gabrieltempass/streamlit-navigation-bar"}
+# parent_dir = os.path.dirname(os.path.abspath(__file__))
+# logo_path = os.path.join(parent_dir, "logo-uem.jpg")
+
 styles = {
     "nav": {
-        "background-color": "#7BD192",
+        "background-color": "#FE0000",
+        "justify-content": "left",
+        
     },
-    "div": {
-        "max-width": "32rem",
+    "img": {
+        "margin-left": "3rem",
+
+        "padding-right": "40%",
     },
+    
     "span": {
-        "border-radius": "0.5rem",
-        "padding": "0.4375rem 0.625rem",
-        "margin": "0 0.125rem",
+        "color": "white",
+        "padding": "15px",
     },
     "active": {
-        "background-color": "rgba(255, 255, 255, 0.25)",
-    },
-    "hover": {
-        "background-color": "rgba(255, 255, 255, 0.35)",
-    },
+        "color": "var(--text-color)",
+        "background-color": "white",
+        "font-weight": "normal",
+        "padding": "15px",
+    }
 }
 
 page = st_navbar(
     pages,
+    logo_path="App/assets/images/logo-uem.svg",    
     urls=urls,
     styles=styles,
     options=False,

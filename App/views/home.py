@@ -5,8 +5,8 @@ def load_view():
     img1, img2, img3,img4, img5 = st.columns(5)
     
     # Mostrar la primera imagen en la primera columna
-    with img1:
-        st.image("App/views/utils/logo-inetum.svg", width=300)
+    # with img1:
+    #     st.image("App/views/utils/logo-inetum.svg", width=300)
     
     # Título y encabezado principal
     st.title(':red[Snowflake GenAI]')
@@ -77,17 +77,23 @@ def load_view():
             st.session_state['input3'] = ""                    
         st.header("Configuracion Azure OpenAI")
 
-        ao_key=st.text_input("Azure api token: ", type="password",value=st.session_state.ao_key)
-        ao_version=st.text_input("Azure api version:", value="2023-10-01-preview")
-        ao_endpoint=st.text_input("Azure endopoint:",type="password",value=st.session_state.ao_endpoint)
-        dep_name=st.text_input("Azure deployment name:",value=st.session_state.dep_name)
+        ao_key=st.text_input("Azure api token: ", type="password",value="926966b68cec4b2a8daf602a911dccce")
+        ao_version=st.text_input("Azure api version:", value="2023-10-01-preview")#1106-Preview
+        ao_endpoint=st.text_input("Azure endopoint:",type="password",value="https://paodorrego.openai.azure.com/")
+        dep_name=st.text_input("Azure deployment name:",value="datacraft-gpt4")
         
         st.header("Configuracion Snowflake")
         
-        acc_input=st.text_input("Identificador cuenta de Snowflake",value=st.session_state.acc_input)#JMQWFZT-DJ11978
-        user_input=st.text_input("Nombre de usuario",value=st.session_state.user_input)#PabloDorrego
-        pass_input=st.text_input("Contraseña", type='password',value=st.session_state.pass_input)
-        input3=st.text_input("Base de datos:",value=st.session_state.input3)#FINANCIAL__ECONOMIC_ESSENTIALS
+        # acc_input=st.text_input("Identificador cuenta de Snowflake",value=st.session_state.acc_input)#JMQWFZT-DJ11978
+        # user_input=st.text_input("Nombre de usuario",value=st.session_state.user_input)#PabloDorrego
+        # pass_input=st.text_input("Contraseña", type='password',value=st.session_state.pass_input)
+        # input3=st.text_input("Base de datos:",value=st.session_state.input3)#FINANCIAL__ECONOMIC_ESSENTIALS
+        
+        acc_input = st.text_input("Identificador cuenta de Snowflake", value="JMQWFZT-DJ11978")
+        user_input = st.text_input("Nombre de usuario", value="PabloDorrego")
+        pass_input = st.text_input("Contraseña", type='password')
+
+        input3 = st.text_input("Base de datos:", "FINANCIAL__ECONOMIC_ESSENTIALS")
         # Every form must have a submit button.
         submitted = st.form_submit_button("Guardar configuración")
         if submitted:

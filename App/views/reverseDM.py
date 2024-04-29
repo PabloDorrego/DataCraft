@@ -123,10 +123,7 @@ def load_view():
     # Estilos y configuraciones adicionales
     st.markdown("""
         <style>
-        section[data-testid="stSidebar"]{
-            top: 6%; 
-            height: 100% !important;
-        }
+       
         div[data-testid="collapsedControl"] {
             visibility: visible;
 

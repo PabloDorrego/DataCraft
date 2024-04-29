@@ -59,14 +59,19 @@ def load_view():
     st.markdown("""
         <style>
         section[data-testid="stSidebar"]{
-            top: 6%; 
+            top: 3rem; 
             height: 100% !important;
         }
         div[data-testid="collapsedControl"] {
             visibility: visible;
         }
         </style>""", unsafe_allow_html=True)
-    
+    # st.markdown("""
+    #     <style>
+    #     div[data-testid="collapsedControl"] {
+    #         visibility: visible;
+    #     }
+    #     </style>""", unsafe_allow_html=True)
     st.markdown(
         """
         <style>
@@ -92,37 +97,37 @@ def load_view():
         prompt_metadata = me.get_metadata(st.session_state.acc_input, st.session_state.user_input, st.session_state.pass_input, st.session_state.input3)
         prompt_metadata += f"\n\nEstos son los dominios de la empresa: {input1}\n\nEstos son los dominios de datos: {input2}"
 
-    try: 
-        if "messages_datamart" not in st.session_state:
-            st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
+    # try: 
+    if "messages_datamart" not in st.session_state:
+        st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
 
-        # Interfaz del chatbot y manejo de mensajes
-        if prompt := st.chat_input():
-            st.session_state.messages_datamart.append({"role": "user", "content": prompt})
+    # Interfaz del chatbot y manejo de mensajes
+    if prompt := st.chat_input():
+        st.session_state.messages_datamart.append({"role": "user", "content": prompt})
 
-        for message in st.session_state.messages_datamart:
-            if message["role"] == "system":
-                continue
-            with st.chat_message(message["role"]):
-                st.write(message["content"])
-                if "results" in message:
-                    st.dataframe(message["results"])
+    for message in st.session_state.messages_datamart:
+        if message["role"] == "system":
+            continue
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
+            if "results" in message:
+                st.dataframe(message["results"])
 
-        if st.session_state.messages_datamart[-1]["role"] != "assistant":
-            with st.chat_message("assistant"):
-                response = ""
-                resp_container = st.empty()
-                for delta in client.chat.completions.create(
-                        model=model,
-                        messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
-                        stream=True,
-                ):
-                    if delta.choices:
-                        response += (delta.choices[0].delta.content or "")
-                    resp_container.markdown(response)
+    if st.session_state.messages_datamart[-1]["role"] != "assistant":
+        with st.chat_message("assistant"):
+            response = ""
+            resp_container = st.empty()
+            for delta in client.chat.completions.create(
+                    model=st.session_state["model"],
+                    messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
+                    stream=True,
+            ):
+                if delta.choices:
+                    response += (delta.choices[0].delta.content or "")
+                resp_container.markdown(response)
 
-                message = {"role": "assistant", "content": response}
-                st.session_state.messages_datamart.append(message)
-    except:
-        st.error("Por favor, rellene todos los campos de configuración")
-        st.stop()
+            message = {"role": "assistant", "content": response}
+            st.session_state.messages_datamart.append(message)
+    # except:
+    #     st.error("Por favor, rellene todos los campos de configuración")
+    #     st.stop()

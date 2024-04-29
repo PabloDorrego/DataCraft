@@ -35,11 +35,11 @@ def load_view():
     st.markdown("""
         <style>
         section[data-testid="stSidebar"]{
-            top: 5%; 
+            top: 3rem; 
             height: 100% !important;
         }
         div[data-testid="collapsedControl"] {
-            top: 100px !important;
+            visibility: visible;
         }
         </style>""", unsafe_allow_html=True)
 
@@ -142,7 +142,7 @@ def load_view():
             if not st.session_state.finish:
                 st.image("App/views/utils/logo-inetum.svg")
                 create_domains(dominios["dominios"], container)
-                send = st.button("Generar SQL y finalizar", on_click=fin)
+                send = st.sidebar.button("Generar SQL y finalizar", on_click=fin)
             if st.session_state.finish:
                 generarSQL(container)
                 create_domains(dominios["dominios"], container)
