@@ -22,26 +22,31 @@ if st.session_state["authentication_status"]:
     urls = {"GitHub": "https://github.com/gabrieltempass/streamlit-navigation-bar"}
     styles = {
         "nav": {
-            "background-color": "#7BD192",
+            "background-color": "#FE0000",
+            "justify-content": "left",
+            
         },
-        "div": {
-            "max-width": "32rem",
+        "img": {
+            "margin-left": "3rem",
+
+            "padding-right": "40%",
         },
+        
         "span": {
-            "border-radius": "0.5rem",
-            "padding": "0.4375rem 0.625rem",
-            "margin": "0 0.125rem",
+            "color": "white",
+            "padding": "15px",
         },
         "active": {
-            "background-color": "rgba(255, 255, 255, 0.25)",
-        },
-        "hover": {
-            "background-color": "rgba(255, 255, 255, 0.35)",
-        },
+            "color": "var(--text-color)",
+            "background-color": "white",
+            "font-weight": "normal",
+            "padding": "15px",
+        }
     }
 
     page = st_navbar(
         pages,
+        logo_path="App/assets/images/logo-uem.svg",    
         urls=urls,
         styles=styles,
         options=False,

@@ -59,7 +59,7 @@ def load_view():
     st.markdown("""
         <style>
         section[data-testid="stSidebar"]{
-            top: 3rem; 
+            top: 5rem; 
             height: 100% !important;
         }
         div[data-testid="collapsedControl"] {

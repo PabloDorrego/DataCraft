@@ -9,6 +9,7 @@ def load_view():
     #     st.image("App/views/utils/logo-inetum.svg", width=300)
     
     # Título y encabezado principal
+    st.write("")
     st.title(':red[Snowflake GenAI]')
     st.header("Asistentes para la segmentación de datos")
     
@@ -105,6 +106,8 @@ def load_view():
             st.session_state.user_input = user_input
             st.session_state.pass_input = pass_input
             st.session_state.input3 = input3
+    #añadir elemento en blanco
+    st.title(" ")
 
 
 

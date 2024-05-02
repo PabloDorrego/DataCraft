@@ -35,7 +35,7 @@ def load_view():
     st.markdown("""
         <style>
         section[data-testid="stSidebar"]{
-            top: 3rem; 
+            top: 5rem; 
             height: 100% !important;
         }
         div[data-testid="collapsedControl"] {
@@ -89,7 +89,7 @@ def load_view():
 
         with st.sidebar:
             # Crear la barra lateral
-            st.image("App/views/utils/cuadrado-inetum.png")
+            #st.image("App/views/utils/cuadrado-inetum.png")
             st.markdown("""<h1 style="color:#018579; ">Domain GenAI chatbot</h1>""", unsafe_allow_html=True)
 
             # Aceptar la entrada del usuario
@@ -140,9 +140,9 @@ def load_view():
         with container:
             dominios = get_JSON()
             if not st.session_state.finish:
-                st.image("App/views/utils/logo-inetum.svg")
-                create_domains(dominios["dominios"], container)
                 send = st.sidebar.button("Generar SQL y finalizar", on_click=fin)
+
+                create_domains(dominios["dominios"], container)
             if st.session_state.finish:
                 generarSQL(container)
                 create_domains(dominios["dominios"], container)
@@ -174,3 +174,5 @@ def load_view():
         des = get_des() 
         area = get_area()   
         send = st.button("Generar", disabled=(area is ""), on_click=callback)
+    st.title("")
+
