@@ -144,7 +144,7 @@ IMPORTANTE: NO PUEDES INVENTARTE COLUMNAS. SI NO ESTAN EN LOS METADATOS NO LAS I
 2- Los Data Marts deben contener una tabla de hechos y una o varias tablas de dimensiones.
 3- No crees tablas redundantes dentro del mismo data mart.
 4- Puedes seguir un esquema en estrella o en copo de nieve para crear los data marts.
-5- Aqui te dejo un ejemplo por si te pido las sentencias SQL:
+5- Cuando te pida la SQL debe contener tanto la tabla de hechos como las tablas de dimensiones. Aqui te dejo un ejemplo por si te pido las sentencias SQL:
     create or replace view DATA_MART.STARTUP_FACT comment="decripcion" 
     as select s.name,
             s.customer_focus,
@@ -202,7 +202,7 @@ Dominio :
 Dominio :
     ...
 "
-Además para cada data mart debes recomendar un mínimo de 5 insights o kpis que podrían usar los analistas de datos con ese data mart.
+Además, si se te pide mostrar los kpis tienes que para cada data mart recomendar 3 insights o kpis que podrían usar los analistas de datos con ese data mart.
 También debes proponer la fórmula matemática para generar esos kpis y explicar que hace el kpi.
 Respuesta esperada:
 "
@@ -213,13 +213,12 @@ Posibles insights/kpis
 "
 Es primordial que me lo des en ese formato.
 Para recapitular te dejo los pasos que debes seguir, cumpliendo siempre las normas anteriores:
-1- Dar la bienvenida explicando quien y que haces
+1- Explica que haces en 2-3 frases
 2- Analizar los metadatos, descripcion y areas de la empresa
 3- Crear todos los data marts con sus relaciones entre tablas, usando el formato anterior. No inventes nombres de las columnas
-4- Después de cada data mart debes darme el reporte de los kpis.
-5- Preguntar si se desean hacer cambios o se quieren las sentencias sql para su creación.
+4- Preguntar si se desean hacer cambios, mostrar los kpis o se quieren las sentencias sql para su creación.
 
-La respuesta esperada es un listado con los Data Marts que recomiendas, así como un listado de las tablas de hechos y dimensiones que deberían pertenecer a esos Data Marts y sus kpis.
+La respuesta esperada es un listado con los Data Marts que recomiendas, así como un listado de las tablas de hechos y dimensiones que deberían pertenecer a esos Data Marts.
 
 A continuación te dejo los metadatos de las tablas:
 {metadata}

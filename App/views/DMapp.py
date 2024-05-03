@@ -5,73 +5,33 @@ from views.utils import DataMart as me
 
 # Función para cargar la vista de Data Marta en la aplicación
 def load_view():
-    # st.sidebar.image("App/views/utils/cuadrado-inetum.png")
-    # st.sidebar.header("Configuracion Azure OpenAI")
 
-    # Entradas para configuración de Azure OpenAI
-        # ao_key = st.sidebar.text_input("Azure api token: ", type="password")
-        # ao_version = st.sidebar.text_input("Azure api version:", "2023-10-01-preview")
-        # ao_endpoint = st.sidebar.text_input("Azure endopoint:",type="password")
-        # dep_name = st.sidebar.text_input("Azure deployment name:")
-    if 'ao_key' not in st.session_state:
-        st.session_state['ao_key'] = ""
-    if 'ao_version' not in st.session_state:
-        st.session_state['ao_version'] = ""
-    if "ao_endpoint" not in st.session_state:
-        st.session_state['ao_endpoint'] = ""
-    if 'dep_name' not in st.session_state:
-        st.session_state['dep_name'] = ""
-    if "acc_input" not in st.session_state:
-        st.session_state['acc_input'] = ""
-    if 'user_input' not in st.session_state:
-        st.session_state['user_input'] = ""
-    if "pass_input" not in st.session_state:
-        st.session_state['pass_input'] = ""     
-    if "input3" not in st.session_state:
-        st.session_state['input3'] = ""
-    if "model" not in st.session_state:
-        st.session_state['model'] = ""
-
-
-    # Crear instancia de AzureOpenAI con las configuraciones
     client = AzureOpenAI(
-        api_key=st.session_state.ao_key,  
-        api_version=st.session_state,
-        azure_endpoint=st.session_state.ao_endpoint
-    )
-    # st.session_state["client"]=client
-    # model = dep_name
-    # st.session_state["model"]=model
-    st.session_state.model=st.session_state.dep_name
-
-    #st.sidebar.header("Configuracion Snowflake")
-
-    # Entradas para configuración de Snowflake
-    # acc_input = st.sidebar.text_input("Identificador cuenta de Snowflake",type='password')
-    # user_input = st.sidebar.text_input("Nombre de usuario")
-    # pass_input = st.sidebar.text_input("Contraseña",type='password')
-    # input3 = st.sidebar.text_input("Base de datos:",)
+            api_key=st.session_state.ao_key,
+            api_version=st.session_state.ao_version,
+            azure_endpoint=st.session_state.ao_endpoint
+        )
+    model = st.session_state.dep_name
 
     # Título de la página
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
     st.title(":red[Data Marta]")
 
-    #Estilos y configuraciones adicionales
+    # Estilos y configuraciones adicionales
     st.markdown("""
         <style>
         section[data-testid="stSidebar"]{
-            top: 5rem; 
+            top: 6rem; 
             height: 100% !important;
         }
         div[data-testid="collapsedControl"] {
             visibility: visible;
         }
         </style>""", unsafe_allow_html=True)
-    # st.markdown("""
-    #     <style>
-    #     div[data-testid="collapsedControl"] {
-    #         visibility: visible;
-    #     }
-    #     </style>""", unsafe_allow_html=True)
+    
     st.markdown(
         """
         <style>
@@ -82,9 +42,8 @@ def load_view():
         """,
         unsafe_allow_html=True,
     )
-
     # Configuración de la barra lateral con información adicional
-    st.sidebar.header("Información")
+    st.sidebar.header("Información extra")
 
     # Caja de texto para el primer input
     input1 = st.sidebar.text_area("Añade una descripcion de la empresa", "")
@@ -97,7 +56,7 @@ def load_view():
         prompt_metadata = me.get_metadata(st.session_state.acc_input, st.session_state.user_input, st.session_state.pass_input, st.session_state.input3)
         prompt_metadata += f"\n\nEstos son los dominios de la empresa: {input1}\n\nEstos son los dominios de datos: {input2}"
 
-    # try: 
+
     if "messages_datamart" not in st.session_state:
         st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
 
@@ -118,7 +77,7 @@ def load_view():
             response = ""
             resp_container = st.empty()
             for delta in client.chat.completions.create(
-                    model=st.session_state["model"],
+                    model=model,
                     messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
                     stream=True,
             ):
@@ -128,6 +87,12 @@ def load_view():
 
             message = {"role": "assistant", "content": response}
             st.session_state.messages_datamart.append(message)
-    # except:
-    #     st.error("Por favor, rellene todos los campos de configuración")
-    #     st.stop()
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")

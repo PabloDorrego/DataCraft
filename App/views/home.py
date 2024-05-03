@@ -10,6 +10,9 @@ def load_view():
     
     # Título y encabezado principal
     st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
     st.title(':red[DataCraft]')
     st.header("Asistentes para la segmentación de datos")
     
