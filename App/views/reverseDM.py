@@ -118,7 +118,7 @@ def load_view():
         st.session_state['model'] = ""
 
     # Título de la página
-    st.title(":red[Data Marta Reverse]")
+    st.title(":red[KPI identification]")
 
     # Estilos y configuraciones adicionales
     st.markdown("""
@@ -175,39 +175,39 @@ def load_view():
     if st.button("Comenzar"):
         #prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
 
-        try: 
-            prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
+        # try: 
+        prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
 
-            if "messages_datamart" not in st.session_state:
-                st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
+        if "messages_datamart" not in st.session_state:
+            st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
 
-            # Interfaz del chatbot y manejo de mensajes
-            if prompt := st.chat_input():
-                st.session_state.messages_datamart.append({"role": "user", "content": prompt})
+        # Interfaz del chatbot y manejo de mensajes
+        if prompt := st.chat_input():
+            st.session_state.messages_datamart.append({"role": "user", "content": prompt})
 
-            for message in st.session_state.messages_datamart:
-                if message["role"] == "system":
-                    continue
-                with st.chat_message(message["role"]):
-                    st.write(message["content"])
-                    if "results" in message:
-                        st.dataframe(message["results"])
+        for message in st.session_state.messages_datamart:
+            if message["role"] == "system":
+                continue
+            with st.chat_message(message["role"]):
+                st.write(message["content"])
+                if "results" in message:
+                    st.dataframe(message["results"])
 
-            if st.session_state.messages_datamart[-1]["role"] != "assistant":
-                with st.chat_message("assistant"):
-                    response = ""
-                    resp_container = st.empty()
-                    for delta in client.chat.completions.create(
-                            model=model,
-                            messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
-                            stream=True,
-                    ):
-                        if delta.choices:
-                            response += (delta.choices[0].delta.content or "")
-                        resp_container.markdown(response)
+        if st.session_state.messages_datamart[-1]["role"] != "assistant":
+            with st.chat_message("assistant"):
+                response = ""
+                resp_container = st.empty()
+                for delta in client.chat.completions.create(
+                        model=st.session_state.model,
+                        messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
+                        stream=True,
+                ):
+                    if delta.choices:
+                        response += (delta.choices[0].delta.content or "")
+                    resp_container.markdown(response)
 
-                    message = {"role": "assistant", "content": response}
-                    st.session_state.messages_datamart.append(message)
-        except:
-            st.error("Por favor, revise la configuración de Snowflake")
-            st.stop()
+                message = {"role": "assistant", "content": response}
+                st.session_state.messages_datamart.append(message)
+        # except:
+        #     st.error("Por favor, revise la configuración de Snowflake")
+        #     st.stop()

@@ -5,8 +5,8 @@ import streamlit as st
 import streamlit_authenticator as stauth
 import os
 st.set_page_config(layout="wide")
-pages = ["Home","Domain", "Data Marta", "Data Marta Reverse", "GitHub"]
-urls = {"GitHub": "https://github.com/gabrieltempass/streamlit-navigation-bar"}
+pages = ["Home","Domain", "Data Marts", "KPI", "GitHub"]
+urls = {"GitHub": "https://github.com/PabloDorrego/DataCraft"}#https://github.com/gabrieltempass/streamlit-navigation-bar
 # parent_dir = os.path.dirname(os.path.abspath(__file__))
 # logo_path = os.path.join(parent_dir, "logo-uem.jpg")
 
@@ -45,8 +45,8 @@ page = st_navbar(
 functions = {
     "Home": home.load_view,
     "Domain": connection.load_view,
-    "Data Marta": DMapp.load_view,
-    "Data Marta Reverse": reverseDM.load_view,
+    "Data Marts": DMapp.load_view,
+    "KPI": reverseDM.load_view,
 }
 go_to = functions.get(page)
 if go_to:
