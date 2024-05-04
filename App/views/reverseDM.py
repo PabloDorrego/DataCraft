@@ -98,25 +98,8 @@ Si no encuentras una respuesta coherente con los metadatos no hagas nada.
     return prompt
 # Función para cargar la vista de Data Marta en la aplicación
 def load_view():
-    if 'ao_key' not in st.session_state:
-        st.session_state['ao_key'] = ""
-    if 'ao_version' not in st.session_state:
-        st.session_state['ao_version'] = ""
-    if "ao_endpoint" not in st.session_state:
-        st.session_state['ao_endpoint'] = ""
-    if 'dep_name' not in st.session_state:
-        st.session_state['dep_name'] = ""
-    if "acc_input" not in st.session_state:
-        st.session_state['acc_input'] = ""
-    if 'user_input' not in st.session_state:
-        st.session_state['user_input'] = ""
-    if "pass_input" not in st.session_state:
-        st.session_state['pass_input'] = ""     
-    if "input3" not in st.session_state:
-        st.session_state['input3'] = ""
-    if "model" not in st.session_state:
-        st.session_state['model'] = ""
-
+    st.write("")
+    st.write("")
     # Título de la página
     st.title(":red[KPI identification]")
 
@@ -158,7 +141,7 @@ def load_view():
         azure_endpoint=st.session_state.ao_endpoint
     )
     #model = dep_name
-    st.session_state.model=st.session_state.dep_name
+    model=st.session_state.dep_name
 
 
     # st.sidebar.header("Configuracion Snowflake")
@@ -178,36 +161,45 @@ def load_view():
         # try: 
         prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
 
-        if "messages_datamart" not in st.session_state:
-            st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
+    if "messages_datamart" not in st.session_state:
+        st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
 
-        # Interfaz del chatbot y manejo de mensajes
-        if prompt := st.chat_input():
-            st.session_state.messages_datamart.append({"role": "user", "content": prompt})
+    # Interfaz del chatbot y manejo de mensajes
+    if prompt := st.chat_input():
+        st.session_state.messages_datamart.append({"role": "user", "content": prompt})
 
-        for message in st.session_state.messages_datamart:
-            if message["role"] == "system":
-                continue
-            with st.chat_message(message["role"]):
-                st.write(message["content"])
-                if "results" in message:
-                    st.dataframe(message["results"])
+    for message in st.session_state.messages_datamart:
+        if message["role"] == "system":
+            continue
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
+            if "results" in message:
+                st.dataframe(message["results"])
 
-        if st.session_state.messages_datamart[-1]["role"] != "assistant":
-            with st.chat_message("assistant"):
-                response = ""
-                resp_container = st.empty()
-                for delta in client.chat.completions.create(
-                        model=st.session_state.model,
-                        messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
-                        stream=True,
-                ):
-                    if delta.choices:
-                        response += (delta.choices[0].delta.content or "")
-                    resp_container.markdown(response)
+    if st.session_state.messages_datamart[-1]["role"] != "assistant":
+        with st.chat_message("assistant"):
+            response = ""
+            resp_container = st.empty()
+            for delta in client.chat.completions.create(
+                    model=model,
+                    messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
+                    stream=True,
+            ):
+                if delta.choices:
+                    response += (delta.choices[0].delta.content or "")
+                resp_container.markdown(response)
 
-                message = {"role": "assistant", "content": response}
-                st.session_state.messages_datamart.append(message)
+            message = {"role": "assistant", "content": response}
+            st.session_state.messages_datamart.append(message)
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
         # except:
         #     st.error("Por favor, revise la configuración de Snowflake")
         #     st.stop()
