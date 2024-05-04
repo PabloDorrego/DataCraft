@@ -46,7 +46,7 @@ def load_view():
         <p>Una vez configuradas las credenciales, podrás acceder a las distintas secciones de la aplicación desde la barra de navegación superior.</p>
         <li>En la sección de Domain, deberas introducir una descripción de tu empresa y las áreas de negocio o dominios. A partir de ahí, accederemos a los metadatos y se te presentará una propuesta de segmentación.</li>
         <li>En la sección de Data Marts, deberas introducir una descripción de tu empresa y las áreas de negocio o dominios. A partir de ahí, accederemos a los metadatos y se te presentará una propuesta de segmentación.</li>
-        <li>En la sección de KPI, solo deberás introducir el KPI en lenguaje natural que te interesa y se te presentará la información correspondiente sobre los KPI's.</li>
+        <li>En la sección de KPI, solo deberás introducir el KPI en lenguaje natural que te interesa y se te presentará la información correspondiente sobre los KPI's. Es necesario que en la configuración *home* cambies la base de datos a la capa de explotación (golden_layer)</li>
         <li>En la sección de GitHub, podrás acceder al repositorio de la aplicación en GitHub.</li>
     </ul>
     """,unsafe_allow_html = True)
