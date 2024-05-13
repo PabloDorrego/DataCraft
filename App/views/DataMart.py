@@ -1,7 +1,7 @@
 # Importar bibliotecas necesarias
 from openai import AzureOpenAI, OpenAI
 import streamlit as st
-from views.utils import DataMart as me
+from views.utils import MetadataExtractorDataMart as me
 
 # Función para cargar la vista de Data Marta en la aplicación
 def load_view():

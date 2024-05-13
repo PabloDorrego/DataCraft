@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
-from views import home, DMapp, connection, reverseDM
+from views import Home, Domain, DataMart, KPIs
 import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
@@ -53,10 +53,10 @@ if st.session_state["authentication_status"]:
     )
 
     functions = {
-        "Home": home.load_view,
-        "Domain": connection.load_view,
-        "Data Marta": DMapp.load_view,
-        "Data Marta Reverse": reverseDM.load_view,
+        "Home": Home.load_view,
+        "Domain": Domain.load_view,
+        "Data Marta": DataMart.load_view,
+        "Data Marta Reverse": KPIs.load_view,
     }
     go_to = functions.get(page)
     if go_to:

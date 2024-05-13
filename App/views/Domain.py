@@ -7,7 +7,7 @@ import json
 from openai import OpenAI, AzureOpenAI
 from typing import List
 from views.utils.functions import *
-from views.utils import MetadataExtractor2 as me
+from views.utils import MetadataExtractorDomain as me
 from snowflake.snowpark import Session
 import utils as utl
 

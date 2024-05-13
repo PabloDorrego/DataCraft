@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
-from views import home, DMapp, connection, reverseDM
+from views import Home, Domain, DataMart, KPIs
 import streamlit as st
 import streamlit_authenticator as stauth
 import os
@@ -43,10 +43,10 @@ page = st_navbar(
 )
 
 functions = {
-    "Home": home.load_view,
-    "Domain": connection.load_view,
-    "Data Marts": DMapp.load_view,
-    "KPI": reverseDM.load_view,
+    "Home": Home.load_view,
+    "Domain": Domain.load_view,
+    "Data Marts": DataMart.load_view,
+    "KPI": KPIs.load_view,
 }
 go_to = functions.get(page)
 if go_to:
