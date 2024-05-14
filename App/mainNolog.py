@@ -1,9 +1,7 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
 from views import Home, Domain, DataMart, KPIs
-import streamlit as st
-import streamlit_authenticator as stauth
-import os
+
 st.set_page_config(layout="wide")
 pages = ["Home","Domain", "Data Marts", "KPI", "GitHub"]
 urls = {"GitHub": "https://github.com/PabloDorrego/DataCraft"}#https://github.com/gabrieltempass/streamlit-navigation-bar
