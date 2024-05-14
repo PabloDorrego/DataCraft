@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
-from views import Home, Domain, DataMart, KPIs
+from views import home, Domain, DataMart, KPIs
 
 st.set_page_config(layout="wide")
 pages = ["Home","Domain", "Data Marts", "KPI", "GitHub"]
