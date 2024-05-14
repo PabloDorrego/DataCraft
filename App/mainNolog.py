@@ -41,7 +41,7 @@ page = st_navbar(
 )
 
 functions = {
-    "Home": Home.load_view,
+    "Home": home.load_view,
     "Domain": Domain.load_view,
     "Data Marts": DataMart.load_view,
     "KPI": KPIs.load_view,
