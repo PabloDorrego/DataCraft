@@ -145,7 +145,7 @@ IMPORTANTE: NO PUEDES INVENTARTE COLUMNAS. SI NO ESTAN EN LOS METADATOS NO LAS I
 3- No crees tablas redundantes dentro del mismo data mart.
 4- Puedes seguir un esquema en estrella o en copo de nieve para crear los data marts.
 5- Cuando te pida la SQL debe contener tanto la tabla de hechos como las tablas de dimensiones. Aqui te dejo un ejemplo por si te pido las sentencias SQL:
-    create or replace view DATA_MART.STARTUP_FACT comment="decripcion" 
+    create or replace view DATA_MARTS.STARTUP_DM comment="decripcion" 
     as select s.name,
             s.customer_focus,
             s.total_inversion_captada,

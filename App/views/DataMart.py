@@ -24,6 +24,7 @@ def load_view():
     st.markdown("""
         <style>
         section[data-testid="stSidebar"]{
+            top: 6rem;
         }
         div[data-testid="collapsedControl"] {
             visibility: visible;
@@ -40,6 +41,21 @@ def load_view():
         """,
         unsafe_allow_html=True,
     )
+    with st.sidebar:
+        st.info("Antes de comenzar, asegurese de seleccionar la base de datos correcta.",icon="🚨")
+        with st.expander("Configuración "):
+            with st.form(key="config"):
+                acc_input = st.text_input("Identificador cuenta de Snowflake", value=st.session_state.acc_input)
+                user_input = st.text_input("Nombre de usuario", value=st.session_state.user_input)
+                pass_input = st.text_input("Contraseña", type='password',value=st.session_state.pass_input)
+                input3 = st.text_input("Base de datos:", value=st.session_state.input3)
+                # Every form must have a submit button.
+                submitted = st.form_submit_button("Guardar configuración")
+                if submitted:
+                    st.session_state.acc_input=acc_input
+                    st.session_state.user_input=user_input
+                    st.session_state.pass_input=pass_input
+                    st.session_state.input3=input3
     # Configuración de la barra lateral con información adicional
     st.sidebar.header("Información extra")
 
@@ -74,13 +90,14 @@ def load_view():
             with st.chat_message("assistant"):
                 response = ""
                 resp_container = st.empty()
-                for delta in client.chat.completions.create(
-                        model=model,
-                        messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
-                        stream=True,
-                ):
-                    if delta.choices:
-                        response += (delta.choices[0].delta.content or "")
+                with st.spinner("Generando respuesta..."):
+                    for delta in client.chat.completions.create(
+                            model=model,
+                            messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
+                            stream=True,
+                    ):
+                        if delta.choices:
+                            response += (delta.choices[0].delta.content or "")
                     resp_container.markdown(response)
 
                 message = {"role": "assistant", "content": response}

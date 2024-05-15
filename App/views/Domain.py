@@ -184,6 +184,21 @@ def load_view():
         # pass_input = st.text_input("Contraseña", type='password')
 
         # input3 = st.text_input("Base de datos:")
+        st.title("")
+        st.info("Antes de comenzar, asegurese de seleccionar la base de datos correcta.",icon="🚨")
+        with st.expander("Configuración "):
+            with st.form(key="config"):
+                acc_input = st.text_input("Identificador cuenta de Snowflake", value=st.session_state.acc_input)
+                user_input = st.text_input("Nombre de usuario", value=st.session_state.user_input)
+                pass_input = st.text_input("Contraseña", type='password',value=st.session_state.pass_input)
+                input3 = st.text_input("Base de datos:", value=st.session_state.input3)
+                # Every form must have a submit button.
+                submitted = st.form_submit_button("Guardar configuración")
+                if submitted:
+                    st.session_state.acc_input=acc_input
+                    st.session_state.user_input=user_input
+                    st.session_state.pass_input=pass_input
+                    st.session_state.input3=input3
         st.header("Información de la empresa")
         des = get_des() 
         area = get_area()

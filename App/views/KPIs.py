@@ -152,23 +152,35 @@ def load_view():
     # user_input = st.sidebar.text_input("Nombre de usuario")
     # pass_input = st.sidebar.text_input("Contraseña",type='password')
     # input3 = st.sidebar.text_input("Base de datos:", "")
-
-
-
-    # Botón para generar el metadata prompt
-    if st.button("Comenzar"):
-        #prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
-        prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
-
+    placeholder = st.empty()
+    with placeholder.container():
+        st.info("Antes de comenzar, asegurese de seleccionar la base de datos que contenga los Data Marts.",icon="🚨")
+        with st.expander("Configuración "):
+            with st.form(key="config"):
+                acc_input = st.text_input("Identificador cuenta de Snowflake", value=st.session_state.acc_input)
+                user_input = st.text_input("Nombre de usuario", value=st.session_state.user_input)
+                pass_input = st.text_input("Contraseña", type='password',value=st.session_state.pass_input)
+                input3 = st.text_input("Base de datos:", "GOLDEN_LAYER")
+                # Every form must have a submit button.
+                submitted = st.form_submit_button("Guardar configuración")
+                if submitted:
+                    st.session_state.acc_input=acc_input
+                    st.session_state.user_input=user_input
+                    st.session_state.pass_input=pass_input
+                    st.session_state.input3=input3     
+        # Botón para generar el metadata prompt
+        if st.button("Comenzar"):
+            prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
+            
     try: 
-        if "messages_datamart" not in st.session_state:
-            st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]
-
+        if "messages_kpi" not in st.session_state:
+            st.session_state.messages_kpi = [{"role": "system", "content": prompt_metadata}]
+        placeholder.empty()
         # Interfaz del chatbot y manejo de mensajes
         if prompt := st.chat_input():
-            st.session_state.messages_datamart.append({"role": "user", "content": prompt})
+            st.session_state.messages_kpi.append({"role": "user", "content": prompt})
 
-        for message in st.session_state.messages_datamart:
+        for message in st.session_state.messages_kpi:
             if message["role"] == "system":
                 continue
             with st.chat_message(message["role"]):
@@ -176,21 +188,22 @@ def load_view():
                 if "results" in message:
                     st.dataframe(message["results"])
 
-        if st.session_state.messages_datamart[-1]["role"] != "assistant":
+        if st.session_state.messages_kpi[-1]["role"] != "assistant":
             with st.chat_message("assistant"):
                 response = ""
                 resp_container = st.empty()
-                for delta in client.chat.completions.create(
-                        model=model,
-                        messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_datamart],
-                        stream=True,
-                ):
-                    if delta.choices:
-                        response += (delta.choices[0].delta.content or "")
+                with st.spinner("Generando respuesta..."):
+                    for delta in client.chat.completions.create(
+                            model=model,
+                            messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_kpi],
+                            stream=True,
+                    ):
+                        if delta.choices:
+                            response += (delta.choices[0].delta.content or "")
                     resp_container.markdown(response)
 
                 message = {"role": "assistant", "content": response}
-                st.session_state.messages_datamart.append(message)
+                st.session_state.messages_kpi.append(message)
         st.write("")
         st.write("")
         st.write("")
@@ -201,5 +214,4 @@ def load_view():
         st.write("")
         st.write("")
     except:
-        st.write("Por favor, haga click en el botón de comenzar.")
         st.stop()

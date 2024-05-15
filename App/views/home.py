@@ -54,13 +54,13 @@ def load_view():
     st.header(":red[Bases de datos de ejemplo]")
     ej1,ej2=st.columns(2)
     with ej2:
-        st.header(":green[Financial and economic]")
-        st.write("**Descripción de la base de datos:** Esta base de datos incluye indicadores macroeconómicos, volúmenes de negociación y precios de acciones de Estados Unidos y ETF ejecutados en el Nasdaq, así como datos del sector bancario para proporcionar a los usuarios una visión del estado actual de la economía y la industria financiera. Los datos se actualizan diariamente y se remontan a 2010.")
+        st.header(":green[Opta Football Data]")
+        st.write("**Descripción de la base de datos:** esta base de datos proporciona una amplia gama de datos detallados sobre el rendimiento de los equipos y jugadores en partidos de fútbol de más de 200 competiciones en todo el mundo. Incluye información desde los detalles completos de los partidos hasta eventos individuales en el campo, estadísticas avanzadas de jugadores y equipos.")
         #enlace a la doc
-        st.write("**Nombre de la base de datos en Snowflake:** FINANCIAL__ECONOMIC_ESSENTIALS")
-        st.write("**Descripción de la empresa:** empresa líder en el campo del análisis financiero y economico. Con la misión de proporcionar información valiosa y análisis experto para respaldar sus decisiones estratégicas y operativas.")
+        st.write("**Nombre de la base de datos en Snowflake:** OPTA_DATA_FOOTBALL__SAMPLE")
+        st.write("**Descripción de la empresa:** Opta es una empresa líder en la recolección, empaquetado y distribución de datos deportivos a clientes de Stats Perform en todo el mundo. Su enfoque en el fútbol proporciona información detallada y precisa para mejorar las experiencias de los aficionados, la producción de contenido y el análisis deportivo.")
         st.write("**Áreas de negocio:** análisis financiero, análisis de mercado, análisis de precios, localización.")
-        st.markdown("[Documentación](https://docs.cybersyn.com/public-domain/economic-and-financial/financial-and-economic-essentials)")
+        st.markdown("[Documentación](https://app.snowflake.com/marketplace/listing/GZSVZCB692/stats-perform-opta-data-football-sample?originTab=provider&providerName=Stats%20Perform&profileGlobalName=GZSVZCB68X)")
     with ej1:
         st.header(":green[US Housing & Real Estate]")
         st.write("**Descripción de la base de datos:** esta base de datos ofrece una amplia gama de indicadores diarios, semanales, mensuales, trimestrales y anuales, incluyendo valores de mercado de viviendas, financiamiento hipotecario, ingresos, puntos de interés y permisos de construcción.")
@@ -128,7 +128,7 @@ def load_view():
         user_input = st.text_input("Nombre de usuario", value="PabloDorrego")
         pass_input = st.text_input("Contraseña", type='password')
 
-        input3 = st.text_input("Base de datos:", "US_HOUSING__REAL_ESTATE_ESSENTIALS")
+        input3 = st.text_input("Base de datos:", "OPTA_DATA_FOOTBALL__SAMPLE")
         # Every form must have a submit button.
         submitted = st.form_submit_button("Guardar configuración")
         if submitted:
