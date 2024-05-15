@@ -128,7 +128,7 @@ def load_view():
         user_input = st.text_input("Nombre de usuario", value="PabloDorrego")
         pass_input = st.text_input("Contraseña", type='password')
 
-        input3 = st.text_input("Base de datos:", "FINANCIAL__ECONOMIC_ESSENTIALS")
+        input3 = st.text_input("Base de datos:", "US_HOUSING__REAL_ESTATE_ESSENTIALS")
         # Every form must have a submit button.
         submitted = st.form_submit_button("Guardar configuración")
         if submitted:

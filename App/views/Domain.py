@@ -10,6 +10,7 @@ from views.utils.functions import *
 from views.utils import MetadataExtractorDomain as me
 from snowflake.snowpark import Session
 import utils as utl
+import time
 
 # Función principal para cargar la vista de dominios
 def load_view():
@@ -35,8 +36,8 @@ def load_view():
     st.markdown("""
         <style>
         section[data-testid="stSidebar"]{
-            top: 5rem; 
-            height: 100% !important;
+            top: 6rem;
+
         }
         div[data-testid="collapsedControl"] {
             visibility: visible;
@@ -80,9 +81,22 @@ def load_view():
             st.session_state.messages.append({"role": "system", "content": promt_json})
             cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
             full_response = ""
-            for response in cl:
-                if response.choices:
-                    full_response += (response.choices[0].delta.content or "")
+            st.text("")
+            st.text("")
+            st.text("")
+
+            with st.status("Generando dominios...", expanded=True) as status:
+                st.write("Accediendo a la base de datos...")
+                time.sleep(2)
+                st.write("Metadatos extraídos.")
+                time.sleep(2)
+                st.write("Procesando consulta...")
+                for response in cl:
+                    if response.choices:
+                        full_response += (response.choices[0].delta.content or "")
+                status.update(label="Dominios generados!", state="complete", expanded=False)
+
+                
             st.session_state.messages.append({"role": "system", "content": full_response})
             if "domains" not in st.session_state:
                 st.session_state["domains"] = full_response
@@ -94,13 +108,11 @@ def load_view():
 
             # Aceptar la entrada del usuario
             prompt = get_text()
-
             # Mostrar el historial del chat
             for message in st.session_state.messages:
                 if message["role"] != "system":
                     with st.chat_message(message["role"]):
                         st.markdown(message["content"])
-
             if prompt:
                 # Añadir el mensaje del usuario al historial
                 st.session_state.messages.append({"role": "user", "content": prompt})
@@ -111,9 +123,10 @@ def load_view():
 
                 full_response = ""
                 cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
-                for response in cl:
-                    if response.choices:
-                        full_response += (response.choices[0].delta.content or "")
+                with st.spinner('Procesando consulta...'):
+                    for response in cl:
+                        if response.choices:
+                            full_response += (response.choices[0].delta.content or "")
 
                 if validateJSON(full_response):
                     # Lógica para procesar la respuesta JSON del asistente
@@ -122,9 +135,10 @@ def load_view():
                     st.session_state.messages.append({"role": "system", "content": "Ahora dame el codigo sql"})
                     cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
                     full_response = ""
-                    for response in cl:
-                        if response.choices:
-                            full_response += (response.choices[0].delta.content or "")
+                    with st.spinner('Procesando consulta...'):
+                        for response in cl:
+                            if response.choices:
+                                full_response += (response.choices[0].delta.content or "")
                     st.session_state.messages.append({"role": "system", "content": full_response})
                     st.session_state.messages.append({"role": "assistant", "content": "¡Hecho! ¿Necesitas algo más?"})
                 else:
@@ -172,7 +186,7 @@ def load_view():
         # input3 = st.text_input("Base de datos:")
         st.header("Información de la empresa")
         des = get_des() 
-        area = get_area()   
+        area = get_area()
         send = st.button("Generar", disabled=(area is ""), on_click=callback)
     st.title("")
 

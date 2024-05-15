@@ -24,8 +24,6 @@ def load_view():
     st.markdown("""
         <style>
         section[data-testid="stSidebar"]{
-            top: 6rem; 
-            height: 100% !important;
         }
         div[data-testid="collapsedControl"] {
             visibility: visible;

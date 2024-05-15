@@ -71,9 +71,13 @@ def generarSQL(container):
 	st.session_state.messages.append({"role": "user", "content": promt_sql})
 	cl=st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
 	sql_response=""
-	for response in cl:
-		if response.choices:
-			sql_response += (response.choices[0].delta.content or "")
+	st.text("")
+	st.text("")
+	st.text("")
+	with st.spinner('Generando SQL...'):
+		for response in cl:
+			if response.choices:
+				sql_response += (response.choices[0].delta.content or "")
 	st.session_state.messages.append({"role": "assistant", "content": sql_response})
 	if "sql" not in st.session_state:
 		st.session_state["sql"]=sql_response
