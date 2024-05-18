@@ -14,11 +14,11 @@ def load_view():
     model = st.session_state.dep_name
 
     # Título de la página
-    st.write("")
-    st.write("")
-    st.write("")
-    st.write("")
-    st.title(":red[Data Marta]")
+    # st.write("")
+    # st.write("")
+    # st.write("")
+    # st.write("")
+    st.title(":red[Data Marts]")
 
     # Estilos y configuraciones adicionales
     st.markdown("""
@@ -69,7 +69,7 @@ def load_view():
     if st.sidebar.button("Comenzar"):
         prompt_metadata = me.get_metadata(st.session_state.acc_input, st.session_state.user_input, st.session_state.pass_input, st.session_state.input3)
         prompt_metadata += f"\n\nEstos son los dominios de la empresa: {input1}\n\nEstos son los dominios de datos: {input2}"
-
+    st.sidebar.title("")
     try:
         if "messages_datamart" not in st.session_state:
             st.session_state.messages_datamart = [{"role": "system", "content": prompt_metadata}]

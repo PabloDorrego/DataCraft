@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_navigation_bar import st_navbar
 from views import home, Domain, DataMart, KPIs
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="centered", page_title="DataCraft")
 pages = ["Home","Domain", "Data Marts", "KPI", "GitHub"]
 urls = {"GitHub": "https://github.com/PabloDorrego/DataCraft"}#https://github.com/gabrieltempass/streamlit-navigation-bar
 # parent_dir = os.path.dirname(os.path.abspath(__file__))
@@ -31,13 +31,17 @@ styles = {
         "padding": "15px",
     }
 }
-
+options = {
+    "show_menu": True,
+    "show_sidebar": False,
+    "use_padding": True,
+}
 page = st_navbar(
     pages,
     logo_path="App/assets/images/logo-uem.svg",    
     urls=urls,
     styles=styles,
-    options=False,
+    options=options,
 )
 
 functions = {

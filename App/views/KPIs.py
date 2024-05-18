@@ -98,9 +98,9 @@ Si no encuentras una respuesta coherente con los metadatos no hagas nada.
     return prompt
 # Función para cargar la vista de Data Marta en la aplicación
 def load_view():
-    st.write("")
-    st.write("")
-    st.write("")
+    # st.write("")
+    # st.write("")
+    # st.write("")
     # Título de la página
     st.title(":red[KPI identification]")
 

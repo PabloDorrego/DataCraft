@@ -9,10 +9,10 @@ def load_view():
     #     st.image("App/views/utils/logo-inetum.svg", width=300)
     
     # Título y encabezado principal
-    st.write("")
-    st.write("")
-    st.write("")
-    st.write("")
+    # st.write("")
+    # st.write("")
+    # st.write("")
+    # st.write("")
     st.title(':red[DataCraft]')
     st.header("Asistentes para la segmentación de datos")
     
@@ -59,7 +59,7 @@ def load_view():
         #enlace a la doc
         st.write("**Nombre de la base de datos en Snowflake:** OPTA_DATA_FOOTBALL__SAMPLE")
         st.write("**Descripción de la empresa:** Opta es una empresa líder en la recolección, empaquetado y distribución de datos deportivos a clientes de Stats Perform en todo el mundo. Su enfoque en el fútbol proporciona información detallada y precisa para mejorar las experiencias de los aficionados, la producción de contenido y el análisis deportivo.")
-        st.write("**Áreas de negocio:** análisis financiero, análisis de mercado, análisis de precios, localización.")
+        st.write("**Áreas de negocio:** análisis de jugadores, análisis de mercado, análisis de partidos, competiciones.")
         st.markdown("[Documentación](https://app.snowflake.com/marketplace/listing/GZSVZCB692/stats-perform-opta-data-football-sample?originTab=provider&providerName=Stats%20Perform&profileGlobalName=GZSVZCB68X)")
     with ej1:
         st.header(":green[US Housing & Real Estate]")
