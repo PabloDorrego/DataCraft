@@ -5,7 +5,7 @@ from views.utils import MetadataExtractorDataMart as me
 
 # Función para cargar la vista de Data Marta en la aplicación
 def load_view():
-
+    # Crear instancia de AzureOpenAI con las configuraciones de la sesión
     client = AzureOpenAI(
             api_key=st.session_state.ao_key,
             api_version=st.session_state.ao_version,
@@ -14,10 +14,6 @@ def load_view():
     model = st.session_state.dep_name
 
     # Título de la página
-    # st.write("")
-    # st.write("")
-    # st.write("")
-    # st.write("")
     st.title(":red[Data Marts]")
 
     # Estilos y configuraciones adicionales
@@ -43,6 +39,7 @@ def load_view():
     )
     with st.sidebar:
         st.info("Antes de comenzar, asegurese de seleccionar la base de datos correcta.",icon="🚨")
+        # Formulario para configurar la conexión a Snowflake
         with st.expander("Configuración "):
             with st.form(key="config"):
                 acc_input = st.text_input("Identificador cuenta de Snowflake", value=st.session_state.acc_input)
@@ -102,15 +99,8 @@ def load_view():
 
                 message = {"role": "assistant", "content": response}
                 st.session_state.messages_datamart.append(message)
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
+        st.title("")
+        st.title("")
     except:
         st.write("Por favor, completa los campos para comenzar.")
         st.stop()

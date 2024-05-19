@@ -179,17 +179,3 @@ A continuación te dejo los metadatos de las tablas:
     
     prompt = GEN_SQL + Metadata_prompt
     return prompt
-if __name__ == '__main__':
-    #conn=snowpark_basic_auth()
-    prompt=get_metadata("DEMO")
-    #with open('prompt.txt', 'w') as f:
-    #    f.write(prompt)
-    print(prompt)
-    #session_with_pwd=snowpark_basic_auth()
-
-    #result_json = execute_query_and_fetch_dataframe(session_with_pwd)
-    #print(result_json)
-    #result_fragments = divide_list(result_json, 10000)
-    #save_fragments_to_json(result_fragments)
-    #print(json.dumps(result_fragments[1], ensure_ascii=False, indent=2))
-    

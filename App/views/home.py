@@ -1,18 +1,7 @@
 import streamlit as st
 # Función para cargar la vista principal (home) de la aplicación
 def load_view():
-    # Crear columnas para las imágenes
-    img1, img2, img3,img4, img5 = st.columns(5)
     
-    # Mostrar la primera imagen en la primera columna
-    # with img1:
-    #     st.image("App/views/utils/logo-inetum.svg", width=300)
-    
-    # Título y encabezado principal
-    # st.write("")
-    # st.write("")
-    # st.write("")
-    # st.write("")
     st.title(':red[DataCraft]')
     st.header("Asistentes para la segmentación de datos")
     
@@ -69,29 +58,7 @@ def load_view():
         st.write("**Áreas de negocio:** financiamiento de viviendas, estadísticas de ingresos, puntos de interés y negocios, permisos de construcción, datos inmobiliarios y de vivienda en general.")
         st.markdown("[Documentación](https://docs.cybersyn.com/public-domain/real-estate/us-housing-real-estate)")
     st.divider()
-    # iniciar/reset session state
-    # st.session_state.acc_input = None
-    # st.session_state.user_input = None
-    # st.session_state.pass_input = None
-    # st.session_state.input3 = None
-    # st.session_state.ao_key = None
-    # st.session_state.ao_version = None
-    # st.session_state.ao_endpoint = None
-    # st.session_state.dep_name = None
-    # st.header("Configuracion Azure OpenAI")
-
-    # st.text_input("Azure api token: ", type="password",key='ao_key')
-    # st.text_input("Azure api version:", "2023-10-01-preview",key='ao_version')
-    # st.text_input("Azure endopoint:",type="password",key='ao_endpoint')
-    # st.text_input("Azure deployment name:",key='dep_name')
-    
-    # st.header("Configuracion Snowflake")
-    
-    # st.text_input("Identificador cuenta de Snowflake",key='acc_input')
-    # st.text_input("Nombre de usuario",key='user_input')
-    # st.text_input("Contraseña", type='password',key='pass_input')
-    # st.text_input("Base de datos:",key='input3')
-
+    # Configuración de las credenciales de acceso a Azure OpenAI y Snowflake
     with st.form("config_form"):
         #Inicializar session state
         if 'ao_key' not in st.session_state:
@@ -119,17 +86,11 @@ def load_view():
         
         st.header("Configuracion Snowflake")
         
-        # acc_input=st.text_input("Identificador cuenta de Snowflake",value=st.session_state.acc_input)#JMQWFZT-DJ11978
-        # user_input=st.text_input("Nombre de usuario",value=st.session_state.user_input)#PabloDorrego
-        # pass_input=st.text_input("Contraseña", type='password',value=st.session_state.pass_input)
-        # input3=st.text_input("Base de datos:",value=st.session_state.input3)#FINANCIAL__ECONOMIC_ESSENTIALS
-        
         acc_input = st.text_input("Identificador cuenta de Snowflake", value="JMQWFZT-DJ11978")
         user_input = st.text_input("Nombre de usuario", value="PabloDorrego")
         pass_input = st.text_input("Contraseña", type='password')
 
         input3 = st.text_input("Base de datos:", "OPTA_DATA_FOOTBALL__SAMPLE")
-        # Every form must have a submit button.
         submitted = st.form_submit_button("Guardar configuración")
         if submitted:
             st.session_state.ao_key = ao_key
@@ -140,8 +101,8 @@ def load_view():
             st.session_state.user_input = user_input
             st.session_state.pass_input = pass_input
             st.session_state.input3 = input3
-    #añadir elemento en blanco
-    st.title(" ")
+    st.title("")
+    st.title("")
 
 
 

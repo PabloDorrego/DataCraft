@@ -135,6 +135,7 @@ def load_view():
                     st.session_state.messages.append({"role": "system", "content": "Ahora dame el codigo sql"})
                     cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
                     full_response = ""
+                    # Elemento de carga mientras se procesa la respuesta
                     with st.spinner('Procesando consulta...'):
                         for response in cl:
                             if response.choices:
@@ -162,14 +163,7 @@ def load_view():
                 create_domains(dominios["dominios"], container)
 
     if st.session_state.display_result:
-        # Configuración de la interfaz para la generación de dominios
-        # st.title(":red[DOMAIN]")
-        # st.header("Configuracion Azure OpenAI")
-        # ao_key = st.text_input("Azure api token: ", type="password")
-        # ao_version = st.text_input("Azure api version:", "2023-10-01-preview")
-        # ao_endpoint = st.text_input("Azure endopoint:",type="password")
-        # dep_name = st.text_input("Azure deployment name:")
-
+       # Credenaciales de acceso a Azure OpenAI
         client = AzureOpenAI(
             api_key=st.session_state.ao_key,
             api_version=st.session_state.ao_version,
@@ -177,22 +171,15 @@ def load_view():
         )
         model = st.session_state.dep_name
 
-        # st.header("Configuracion Snowflake")
-
-        # acc_input = st.text_input("Identificador cuenta de Snowflake")
-        # user_input = st.text_input("Nombre de usuario")
-        # pass_input = st.text_input("Contraseña", type='password')
-
-        # input3 = st.text_input("Base de datos:")
         st.title("")
         st.info("Antes de comenzar, asegurese de seleccionar la base de datos correcta.",icon="🚨")
+        #Formulario para configurar la conexión a Snowflake
         with st.expander("Configuración "):
             with st.form(key="config"):
                 acc_input = st.text_input("Identificador cuenta de Snowflake", value=st.session_state.acc_input)
                 user_input = st.text_input("Nombre de usuario", value=st.session_state.user_input)
                 pass_input = st.text_input("Contraseña", type='password',value=st.session_state.pass_input)
                 input3 = st.text_input("Base de datos:", value=st.session_state.input3)
-                # Every form must have a submit button.
                 submitted = st.form_submit_button("Guardar configuración")
                 if submitted:
                     st.session_state.acc_input=acc_input
@@ -202,6 +189,8 @@ def load_view():
         st.header("Información de la empresa")
         des = get_des() 
         area = get_area()
+        # Botón para generar los dominios
         send = st.button("Generar", disabled=(area is ""), on_click=callback)
+    st.title("")
     st.title("")
 

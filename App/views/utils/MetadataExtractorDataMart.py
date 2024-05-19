@@ -2,27 +2,6 @@
 from snowflake.snowpark import Session
 import json
 import streamlit as st
-
-# Función para autenticar y obtener una sesión Snowflake básica
-def snowpark_basic_auth() -> Session:
-    # Leer configuración desde un archivo JSON
-    with open('cred.json', 'r') as config_file:
-        try:
-            config = json.load(config_file)
-        except json.JSONDecodeError:
-            raise ValueError("Error al cargar el archivo JSON. Asegúrate de que el archivo no esté vacío y tenga un formato JSON válido.")
-
-    account = config['Snowflake']['account']
-    user = config['Snowflake']['user']
-    password = config['Snowflake']['password']
-
-    connection_parameters = {
-        "ACCOUNT": account,
-        "USER": user,
-        "PASSWORD": password
-    }
-    return Session.builder.configs(connection_parameters).create()
-
 # Función para autenticar y obtener una sesión Snowflake con parámetros específicos
 def snowpark_auth(account, user, password) -> Session:
     connection_parameters = {
@@ -31,19 +10,6 @@ def snowpark_auth(account, user, password) -> Session:
         "PASSWORD": password
     }
     return Session.builder.configs(connection_parameters).create()
-
-# Función para autenticar y obtener una sesión Snowflake utilizando secretos de Streamlit
-def snowpark_basic_auth_toml() -> Session:
-    account = st.secrets["SNOWFLAKE_ACCOUNT"]
-    user = st.secrets["SNOWFLAKE_USER"]
-    password = st.secrets["SNOWFLAKE_PASSWORD"]
-    connection_parameters = {
-        "ACCOUNT": account,
-        "USER": user,
-        "PASSWORD": password
-    }
-    return Session.builder.configs(connection_parameters).create()
-
 # Función para ejecutar una consulta y obtener un DataFrame desde Snowflake
 def execute_query_and_fetch_dataframe(session, db):
     # Configurar el rol y almacén de Snowflake
@@ -228,8 +194,9 @@ Estas son las relaciones entre las tablas:
 
 """
     Metadata_prompt = ""
+    # Obtener metadatos de tablas y columnas de Snowflake
     Metadatat = execute_query_and_fetch_dataframe(conn,db)
-    
+    # Procesar y organizar los resultados en un formato específico
     for i in Metadatat:
         table_value = i.get('table', '')
         comment_value = i.get('comment', '')
@@ -292,17 +259,3 @@ def get_doms(account, user, password, db):
             result_string += f"Table: {name}, Comment: {comment}\n"
 
     return result_string.strip()
-
-# Bloque principal para ejecutar el script
-if __name__ == '__main__':
-    # Obtener información sobre dominios
-    prompt = get_doms("TGKDGYU-UA22805", "SNOWPARK", "Snowpark1", "DEMO")
-    print(prompt)
-    #session_with_pwd=snowpark_basic_auth()
-
-    #result_json = execute_query_and_fetch_dataframe(session_with_pwd)
-    #print(result_json)
-    #result_fragments = divide_list(result_json, 10000)
-    #save_fragments_to_json(result_fragments)
-    #print(json.dumps(result_fragments[1], ensure_ascii=False, indent=2))
-    

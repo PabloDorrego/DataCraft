@@ -1,13 +1,12 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
+#https://github.com/gabrieltempass/streamlit-navigation-bar
 from views import home, Domain, DataMart, KPIs
 
-st.set_page_config(layout="centered", page_title="DataCraft")
+st.set_page_config(layout="wide", page_title="DataCraft")
 pages = ["Home","Domain", "Data Marts", "KPI", "GitHub"]
-urls = {"GitHub": "https://github.com/PabloDorrego/DataCraft"}#https://github.com/gabrieltempass/streamlit-navigation-bar
-# parent_dir = os.path.dirname(os.path.abspath(__file__))
-# logo_path = os.path.join(parent_dir, "logo-uem.jpg")
-
+urls = {"GitHub": "https://github.com/PabloDorrego/DataCraft"}
+#Diseño de la barra de navegación
 styles = {
     "nav": {
         "background-color": "#FE0000",
@@ -32,10 +31,11 @@ styles = {
     }
 }
 options = {
-    "show_menu": True,
+    "show_menu": False,
     "show_sidebar": False,
     "use_padding": True,
 }
+#Barra de navegación
 page = st_navbar(
     pages,
     logo_path="App/assets/images/logo-uem.svg",    
@@ -43,7 +43,7 @@ page = st_navbar(
     styles=styles,
     options=options,
 )
-
+#Funiones para navegar entre las vistas
 functions = {
     "Home": home.load_view,
     "Domain": Domain.load_view,

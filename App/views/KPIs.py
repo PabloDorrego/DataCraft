@@ -98,9 +98,6 @@ Si no encuentras una respuesta coherente con los metadatos no hagas nada.
     return prompt
 # Función para cargar la vista de Data Marta en la aplicación
 def load_view():
-    # st.write("")
-    # st.write("")
-    # st.write("")
     # Título de la página
     st.title(":red[KPI identification]")
 
@@ -124,44 +121,23 @@ def load_view():
         """,
         unsafe_allow_html=True,
     )
-
-    # Barra lateral con configuraciones de Azure OpenAI y Snowflake
-    # st.sidebar.image("App/views/utils/cuadrado-inetum.png")
-    # st.sidebar.header("Configuracion Azure OpenAI")
-
-    # # Entradas para configuración de Azure OpenAI
-    # ao_key = st.sidebar.text_input("Azure api token: ", type="password")
-    # ao_version = st.sidebar.text_input("Azure api version:", "2023-10-01-preview")
-    # ao_endpoint = st.sidebar.text_input("Azure endopoint:",type="password")
-    # dep_name = st.sidebar.text_input("Azure deployment name:")
-
-    # Crear instancia de AzureOpenAI con las configuraciones
+    # Crear instancia de AzureOpenAI con las configuraciones de la sesión
     client = AzureOpenAI(
         api_key=st.session_state.ao_key,  
         api_version=st.session_state.ao_version,
         azure_endpoint=st.session_state.ao_endpoint
     )
-    #model = dep_name
     model=st.session_state.dep_name
-
-
-    # st.sidebar.header("Configuracion Snowflake")
-
-    # # Entradas para configuración de Snowflake
-    # acc_input = st.sidebar.text_input("Identificador cuenta de Snowflake",type='password')
-    # user_input = st.sidebar.text_input("Nombre de usuario")
-    # pass_input = st.sidebar.text_input("Contraseña",type='password')
-    # input3 = st.sidebar.text_input("Base de datos:", "")
     placeholder = st.empty()
     with placeholder.container():
         st.info("Antes de comenzar, asegurese de seleccionar la base de datos que contenga los Data Marts.",icon="🚨")
         with st.expander("Configuración "):
+            # Formulario para configurar la conexión a Snowflake
             with st.form(key="config"):
                 acc_input = st.text_input("Identificador cuenta de Snowflake", value=st.session_state.acc_input)
                 user_input = st.text_input("Nombre de usuario", value=st.session_state.user_input)
                 pass_input = st.text_input("Contraseña", type='password',value=st.session_state.pass_input)
                 input3 = st.text_input("Base de datos:", "GOLDEN_LAYER")
-                # Every form must have a submit button.
                 submitted = st.form_submit_button("Guardar configuración")
                 if submitted:
                     st.session_state.acc_input=acc_input
@@ -204,14 +180,7 @@ def load_view():
 
                 message = {"role": "assistant", "content": response}
                 st.session_state.messages_kpi.append(message)
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
+        st.title("")
+        st.title("")
     except:
         st.stop()
