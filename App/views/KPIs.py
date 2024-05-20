@@ -3,6 +3,8 @@ from openai import AzureOpenAI, OpenAI
 from snowflake.snowpark import Session
 import json
 import streamlit as st
+import openai
+from snowflake.connector.errors import DatabaseError
 
 def snowpark_auth(account, user, password) -> Session:
     connection_parameters = {
@@ -146,7 +148,17 @@ def load_view():
                     st.session_state.input3=input3     
         # Botón para generar el metadata prompt
         if st.button("Comenzar"):
-            prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
+            try:
+                prompt_metadata = get_metadata(st.session_state.acc_input,st.session_state.user_input,st.session_state.pass_input,st.session_state.input3)
+            except DatabaseError as e:
+                # Manejo de errores específicos de la base de datos
+                if "too many failed attempts" in str(e).lower():
+                    st.error("Tu cuenta de Snowflake ha sido bloqueada debido a demasiados intentos fallidos. Inténtalo de nuevo después de 15 minutos o contacta a tu administrador de cuenta para obtener ayuda.")
+                elif "incorrect username or password" in str(e).lower():
+                    st.error("Nombre de usuario o contraseña incorrectos. Por favor, revisa tus credenciales y vuelve a intentarlo.")
+                else:
+                    st.error("Error al acceder a la base de datos. Por favor, verifica tus credenciales y asegúrate de que la base de datos está disponible.")
+                st.stop()
             
     try: 
         if "messages_kpi" not in st.session_state:
@@ -169,13 +181,18 @@ def load_view():
                 response = ""
                 resp_container = st.empty()
                 with st.spinner("Generando respuesta..."):
-                    for delta in client.chat.completions.create(
-                            model=model,
-                            messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_kpi],
-                            stream=True,
-                    ):
-                        if delta.choices:
-                            response += (delta.choices[0].delta.content or "")
+                    try:
+                        for delta in client.chat.completions.create(
+                                model=model,
+                                messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages_kpi],
+                                stream=True,
+                        ):
+                            if delta.choices:
+                                response += (delta.choices[0].delta.content or "")
+                    except openai.RateLimitError as e :
+                        # Manejo del error específico de límite de tasa de llamadas de OpenAI
+                        st.error(f"Error de límite de tasa de llamadas de OpenAI: \n{e}")
+                        st.stop()
                     resp_container.markdown(response)
 
                 message = {"role": "assistant", "content": response}
@@ -183,4 +200,5 @@ def load_view():
         st.title("")
         st.title("")
     except:
+        st.write("Por favor, haga click en comenzar para iniciar el proceso.")
         st.stop()

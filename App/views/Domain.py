@@ -11,6 +11,8 @@ from views.utils import MetadataExtractorDomain as me
 from snowflake.snowpark import Session
 import utils as utl
 import time
+import openai
+from snowflake.connector.errors import DatabaseError
 
 # Función principal para cargar la vista de dominios
 def load_view():
@@ -59,8 +61,18 @@ def load_view():
         # Lógica para manejar la entrada del usuario y generar el prompt
         if des:
             st.session_state.client = client
-            prompt_metadata = me.get_metadata(st.session_state.acc_input, st.session_state.user_input, st.session_state.pass_input, st.session_state.input3)
-            prompt_metadata += f"\n\nEsta es la descripción de la empresa: {st.session_state.description}\nEstas son las áreas de negocio: {st.session_state.area}"
+            try: 
+                prompt_metadata = me.get_metadata(st.session_state.acc_input, st.session_state.user_input, st.session_state.pass_input, st.session_state.input3)
+                prompt_metadata += f"\n\nEsta es la descripción de la empresa: {st.session_state.description}\nEstas son las áreas de negocio: {st.session_state.area}"
+            except DatabaseError as e:
+                # Manejo de errores específicos de la base de datos
+                if "too many failed attempts" in str(e).lower():
+                    st.error("Tu cuenta de Snowflake ha sido bloqueada debido a demasiados intentos fallidos. Inténtalo de nuevo después de 15 minutos o contacta a tu administrador de cuenta para obtener ayuda.")
+                elif "incorrect username or password" in str(e).lower():
+                    st.error("Nombre de usuario o contraseña incorrectos. Por favor, revisa tus credenciales y vuelve a intentarlo.")
+                else:
+                    st.error("Error al acceder a la base de datos. Por favor, verifica tus credenciales y asegúrate de que la base de datos está disponible.")
+                st.stop()
             st.session_state['area'] = area
             st.session_state['description'] = des
             st.session_state.display_result = False
@@ -79,7 +91,12 @@ def load_view():
             # Inicialización del chat
             st.session_state.messages = [{"role": "system", "content": metadata}]
             st.session_state.messages.append({"role": "system", "content": promt_json})
-            cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
+            try:
+                cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
+            except openai.RateLimitError as e :
+                # Manejo del error específico de límite de tasa de llamadas de OpenAI
+                st.error(f"Error de límite de tasa de llamadas de OpenAI: \n{e}")
+                st.stop()
             full_response = ""
             st.text("")
             st.text("")
@@ -122,7 +139,13 @@ def load_view():
                     st.markdown(prompt)
 
                 full_response = ""
-                cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
+                try:
+                    # Procesar la respuesta del asistente
+                    cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
+                except openai.RateLimitError as e :
+                    # Manejo del error específico de límite de tasa de llamadas de OpenAI
+                    st.error(f"Error de límite de tasa de llamadas de OpenAI: \n{e}")
+                    st.stop()
                 with st.spinner('Procesando consulta...'):
                     for response in cl:
                         if response.choices:
@@ -133,7 +156,13 @@ def load_view():
                     st.session_state.messages.append({"role": "system", "content": full_response})
                     st.session_state["domains"] = full_response
                     st.session_state.messages.append({"role": "system", "content": "Ahora dame el codigo sql"})
-                    cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
+                    try:
+                        # Procesar la respuesta del asistente
+                        cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
+                    except openai.RateLimitError as e :
+                        # Manejo del error específico de límite de tasa de llamadas de OpenAI
+                        st.error(f"Error de límite de tasa de llamadas de OpenAI: \n{e}")
+                        st.stop()
                     full_response = ""
                     # Elemento de carga mientras se procesa la respuesta
                     with st.spinner('Procesando consulta...'):
@@ -148,7 +177,7 @@ def load_view():
                         message_placeholder = st.empty()
                         st.session_state.messages.append({"role": "assistant", "content": full_response})
                         message_placeholder.markdown(full_response)
-
+  
     if not st.session_state.display_result:
         # Mostrar resultados y generar SQL
         container = st.container()
@@ -190,7 +219,7 @@ def load_view():
         des = get_des() 
         area = get_area()
         # Botón para generar los dominios
-        send = st.button("Generar", disabled=(area is ""), on_click=callback)
+        st.button("Generar", disabled=(area is ""), on_click=callback)
     st.title("")
     st.title("")
 
