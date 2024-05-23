@@ -118,6 +118,7 @@ def load_view():
                 st.session_state.messages_datamart.append(message)
         st.title("")
         st.title("")
+        st.title("")
     except:
         st.write("Por favor, completa los campos para comenzar.")
         st.stop()

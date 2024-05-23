@@ -86,8 +86,8 @@ def load_view():
         
         st.header("Configuracion Snowflake")
         
-        acc_input = st.text_input("Identificador cuenta de Snowflake", value="JMQWFZT-DJ11978")
-        user_input = st.text_input("Nombre de usuario", value="PabloDorrego")
+        acc_input = st.text_input("Identificador cuenta de Snowflake", value="FJVMCGQ-AD47687")
+        user_input = st.text_input("Nombre de usuario", value="Extractor")
         pass_input = st.text_input("Contraseña", type='password')
 
         input3 = st.text_input("Base de datos:", "OPTA_DATA_FOOTBALL__SAMPLE")
