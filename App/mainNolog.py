@@ -12,13 +12,14 @@ styles = {
         "background-color": "#FE0000",
         "justify-content": "left",
         
+        
     },
     "img": {
         "margin-left": "3rem",
-
+        "justify-content": "left",
         "padding-right": "40%",
     },
-    
+
     "span": {
         "color": "white",
         "padding": "15px",
@@ -30,6 +31,7 @@ styles = {
         "padding": "15px",
     }
 }
+
 options = {
     "show_menu": False,
     "show_sidebar": False,
@@ -38,7 +40,9 @@ options = {
 #Barra de navegación
 page = st_navbar(
     pages,
-    logo_path="App/assets/images/logo-uem.svg",    
+    logo_path="App/assets/images/ue-logo-new.svg",   
+    #logo_path="App/assets/images/logo-uem.svg", 
+    logo_page="Home",
     urls=urls,
     styles=styles,
     options=options,
