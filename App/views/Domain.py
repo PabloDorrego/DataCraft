@@ -63,6 +63,7 @@ def load_view():
             st.session_state.client = client
             try: 
                 prompt_metadata = me.get_metadata(st.session_state.acc_input, st.session_state.user_input, st.session_state.pass_input, st.session_state.input3)
+                
                 prompt_metadata += f"\n\nEsta es la descripción de la empresa: {st.session_state.description}\nEstas son las áreas de negocio: {st.session_state.area}"
             except DatabaseError as e:
                 # Manejo de errores específicos de la base de datos
@@ -113,7 +114,6 @@ def load_view():
                         full_response += (response.choices[0].delta.content or "")
                 status.update(label="Dominios generados!", state="complete", expanded=False)
 
-                
             st.session_state.messages.append({"role": "system", "content": full_response})
             if "domains" not in st.session_state:
                 st.session_state["domains"] = full_response
