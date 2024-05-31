@@ -79,7 +79,7 @@ def load_view():
             st.session_state['input3'] = ""                    
         st.header("Configuracion Azure OpenAI")
 
-        ao_key=st.text_input("Azure api token: ", type="password",value="926966b68cec4b2a8daf602a911dccce")
+        ao_key=st.text_input("Azure api token: ", type="password",value="")
         ao_version=st.text_input("Azure api version:", value="2023-10-01-preview")#1106-Preview
         ao_endpoint=st.text_input("Azure endopoint:",type="password",value="https://paodorrego.openai.azure.com/")
         dep_name=st.text_input("Azure deployment name:",value="datacraft-gpt4")
