@@ -93,7 +93,7 @@ def load_view():
             st.session_state.messages = [{"role": "system", "content": metadata}]
             st.session_state.messages.append({"role": "system", "content": promt_json})
             try:
-                cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=True)
+                cl = st.session_state.client.chat.completions.create(model=st.session_state["model"], messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], stream=False)
             except openai.RateLimitError as e :
                 # Manejo del error específico de límite de tasa de llamadas de OpenAI
                 st.error(f"Error de límite de tasa de llamadas de OpenAI: \n{e}")
@@ -102,6 +102,8 @@ def load_view():
             st.text("")
             st.text("")
             st.text("")
+            print(type(cl))
+            print(cl)
 
             with st.status("Generando dominios...", expanded=True) as status:
                 st.write("Accediendo a la base de datos...")
@@ -109,9 +111,9 @@ def load_view():
                 st.write("Metadatos extraídos.")
                 time.sleep(2)
                 st.write("Procesando consulta...")
-                for response in cl:
-                    if response.choices:
-                        full_response += (response.choices[0].delta.content or "")
+                for choice in cl.choices:
+                    if choice.message and choice.message.content:
+                        full_response += choice.message.content
                 status.update(label="Dominios generados!", state="complete", expanded=False)
 
             st.session_state.messages.append({"role": "system", "content": full_response})
