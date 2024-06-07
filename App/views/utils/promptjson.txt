@@ -1,4 +1,5 @@
 dame dominios sql (y las tablas de cada dominio) en formato json sin code fencing.
+Si se te pide mover o cambiar una tabla o dominio, devuelve solo el json actualizado.
 aqui van un ejemplo de formato:
 {
     "dominios": [

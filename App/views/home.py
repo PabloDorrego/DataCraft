@@ -81,14 +81,14 @@ def load_view():
 
         ao_key=st.text_input("Azure api token: ", type="password",value="")
         ao_version=st.text_input("Azure api version:", value="2023-10-01-preview")#1106-Preview
-        ao_endpoint=st.text_input("Azure endopoint:",type="password",value="https://paodorrego.openai.azure.com/")
-        dep_name=st.text_input("Azure deployment name:",value="datacraft-gpt4")
+        ao_endpoint=st.text_input("Azure endopoint:",type="password",value="https://22040682gpt4o.openai.azure.com/")
+        dep_name=st.text_input("Azure deployment name:",value="gpt-4o")
         
         st.header("Configuracion Snowflake")
         
         acc_input = st.text_input("Identificador cuenta de Snowflake", value="FJVMCGQ-AD47687")
         user_input = st.text_input("Nombre de usuario", value="Extractor")
-        pass_input = st.text_input("Contraseña", type='password')
+        pass_input = st.text_input("Contraseña", type='password',value="")
 
         input3 = st.text_input("Base de datos:", "OPTA_DATA_FOOTBALL__SAMPLE")
         submitted = st.form_submit_button("Guardar configuración")
